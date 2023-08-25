@@ -1,0 +1,12 @@
+CREATE TABLE `user`(
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `userId` VARCHAR(16) NOT NULL,
+    `password` VARCHAR(128) NOT NULL,
+    `nickname` VARCHAR(8) NOT NULL,
+    `profileImagePath` TEXT,
+    `phoneNumber` VARCHAR(16) NOT NULL,
+    `introduce` TEXT,
+    `region` VARCHAR(32) NOT NULL,
+	`createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
