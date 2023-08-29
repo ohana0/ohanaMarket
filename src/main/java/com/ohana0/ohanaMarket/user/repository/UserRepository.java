@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository {
 
-	int insertUser(@Param("loginId")String loginId
+	public int insertUser(@Param("loginId")String loginId
 			, @Param("password")String password
 			, @Param("nickname")String nickname
-			, @Param("profileImagePath")String profileImagePath
+//			, @Param("profileImagePath")String profileImagePath
 			, @Param("region")String region
 			, @Param("phoneNumber")String phoneNumber
 			, @Param("introduce")String introduce);
+
+	public int countLoginId(@Param("loginId")String loginId);
 
 }

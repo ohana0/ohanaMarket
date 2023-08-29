@@ -15,16 +15,23 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public int addUser(String loginId, String password, String nickname, MultipartFile profileImage, String region,
+	public int addUser(String loginId, String password, String nickname, String region,
 			String phoneNumber, String introduce) {
-		
-		String profileImagePath = FileManager.saveFile(loginId, profileImage);
+//	public int addUser(String loginId, String password, String nickname, MultipartFile profileImage, String region,
+//			String phoneNumber, String introduce) {		
+//		String profileImagePath = FileManager.saveFile(loginId, profileImage);
 		String encryptPassword = EncryptUtils.md5(password);
 		
 		
-		int count = userRepository.insertUser(loginId,encryptPassword,nickname,profileImagePath,region,phoneNumber,introduce);
+//		int count = userRepository.insertUser(loginId,encryptPassword,nickname,profileImagePath,region,phoneNumber,introduce);
+		int count = userRepository.insertUser(loginId,encryptPassword,nickname,region,phoneNumber,introduce);
+				
 		
-		
+		return count;
+	}
+
+	public int countLoginId(String loginId) {
+		int count = userRepository.countLoginId(loginId);
 		return count;
 	}
 

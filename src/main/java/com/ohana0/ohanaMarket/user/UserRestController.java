@@ -17,25 +17,43 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 	
+	@PostMapping("/user/join/duplicateId")
+	public Map<String,String> duplicateId(@RequestParam("loginId") String loginId){
+		
+		int count = userService.countLoginId(loginId);
+		
+		
+		Map<String,String> resultMap = new HashMap<>();
+		if(count > 0) {
+			resultMap.put("result", "duplicate");
+		}
+		else {
+			resultMap.put("result", "not-duplicate");
+		}
+		return resultMap;
+		
+	}
+	
+	
 	@PostMapping("/user/join")
 	public Map<String,String> createUser(
 			@RequestParam("loginId")String loginId
 			,@RequestParam("password")String password
 			,@RequestParam("nickname")String nickname
-			,@RequestParam("profileImage")MultipartFile profileImage
+//			,@RequestParam("profileImage")MultipartFile profileImage
 			,@RequestParam("region")String region
 			,@RequestParam("phoneNumber")String phoneNumber
 			,@RequestParam("introduce")String introduce
 			){
 		
-		int count = userService.addUser(loginId,password,nickname,profileImage,region,phoneNumber,introduce);
-		
+//		int count = userService.addUser(loginId,password,nickname,profileImage,region,phoneNumber,introduce);
+		int count = userService.addUser(loginId,password,nickname,region,phoneNumber,introduce);
 		Map<String,String> resultMap = new HashMap<>();
 		if(count > 0) {
-			resultMap.put("result", "duplicate");
+			resultMap.put("result", "success");
 		}
 		else {
-			resultMap.put("result", "not-duplicate");
+			resultMap.put("result", "false");
 		}
 		
 		return resultMap;
@@ -48,24 +66,24 @@ public class UserRestController {
 	
 	
 	
-	public Map<String,String> login(
-			@RequestParam("loginId")String loginId
-			,@RequestParam("password")String password
-			){
-		
-		int count = userService.login(loginId,password);
-		
-		
-		Map<String,String> resultMap = new HashMap<>();
-		if(count > 0) {
-			resultMap.put("result", "duplicate");
-		}
-		else {
-			resultMap.put("result", "not-duplicate");
-		}
-		
-		return resultMap;
-		
-	}
+//	public Map<String,String> login(
+//			@RequestParam("loginId")String loginId
+//			,@RequestParam("password")String password
+//			){
+//		
+//		int count = userService.login(loginId,password);
+//		
+//		
+//		Map<String,String> resultMap = new HashMap<>();
+//		if(count > 0) {
+//			resultMap.put("result", "duplicate");
+//		}
+//		else {
+//			resultMap.put("result", "not-duplicate");
+//		}
+//		
+//		return resultMap;
+//		
+//	}
 	
 }
