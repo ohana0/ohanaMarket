@@ -14,6 +14,71 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
+	<div id="wrap">
+		<header>
+			<div class="d-flex align-items-center">
+				<img src="/static/image/logoImage.png" height="75px" class="pl-2">
+				<div id="logoStyle" class="pl-1">OhanaMarket</div>
+			</div>
+			<hr>
+		</header>
+		<section style="height:400px" class="d-flex justify-content-center">
+			<div id="loginBox">
+				<h1>로그인</h1>
+				<div class="id-input-div input-div card d-flex">
+					<i class="bi bi-person-fill p-2"><input type="text" class="input-box" id="idInput" placeholder="아이디"></i>
+				</div>
+				<div class="pw-input-div input-div card d-flex">
+					<i class="bi bi-key p-2"><input type="password" class="input-box" id="pwInput" placeholder="비밀번호"></i>
+				</div>
+				<button type="submit" class="btn btn-success btn-block" id="loginBtn">로그인</button>
+
+				<div>회원이아니라면? <a href="/user/join/view">회원가입 하러가기</a></div>
+			</div>
+		
+		
+		</section>
+		<footer class="d-flex align-items-center">
+			<div id="footerText">Copyright 2023. Ohana0 all rights reserved.</div>
+		</footer>
+	</div>
 	
+	<script>
+		$(document).ready(function(){
+			$("#loginBtn").on("click",function(){
+				let loginId = $("#idInput").val();
+				let password = $("#pwInput").val();
+				if(loginId == ""){
+					alert("아이디를 입력하세요");
+					return;
+				}
+				if(password == ""){
+					alert("비밀번호를 입력하세요");
+				}
+				
+				$.ajax({
+					type:"post"
+					,url:"/user/login"
+					,data:{"loginId":loginId,"password":password}
+					,success:function(data){
+						if(data.result == "success"){
+							location.reload();
+						}
+						else{
+							alert("아이디나 비밀번호가 틀렸습니다.");
+							return;
+						}
+					}
+					,error:function(){
+						alert("오류발생");
+						return;
+					}
+				})				
+				
+				
+			})
+		})
+	
+	</script>
 </body>
 </html>

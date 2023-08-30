@@ -62,6 +62,7 @@
 				
 				</div>
 				<button type="button" class="btn btn-success btn-block" id="submitBtn">가입하기</button>
+				<div>회원이라면? <a href="/user/login/view">로그인하러가기</a></div>
 			</div>
 
 		</section>
@@ -80,22 +81,194 @@ $(document).ready(function(){
 	let nicknameCheck = false;
 	let passwordCheck = false;
 	let phoneCheck = false;
+	let regionCheck = false;
+	
 	$("#submitBtn").on("click",function(){
+		if(!idCheck){
+			alert("아이디를 확인하세요");
+			return;
+		}
+		if(!passwordCheck){
+			alert("비밀번호를 확인하세요");
+			return;
+		}
+		if(!nicknameCheck){
+			alert("닉네임을 확인하세요");
+			return;
+		}
+		if(!phoneCheck){
+			alert("전화번호를 확인하세요");
+			return;
+		}
+		if(!regionCheck){
+			alert("지역설정을 확인하세요");
+			return;
+		}
+		
 		let loginId = $("#idInput").val();
+		let password = $("#pwInput").val();
+		let nickname = $("#nicknameInput").val();
+		let phoneNumber = $("#phoneInput").val();
+		var file = $("#imageInput")[0].files[0];
+		let region = $("#regionInput").val();
+		let introduce = $("#introduceInput").val();
+		
+		var formData = new FormData();
+		formData.append("loginId",loginId);
+		formData.append("password",password);
+		formData.append("nickname",nickname);
+		formData.append("phoneNumber",phoneNumber);
+		formData.append("profileImage",file);
+		formData.append("region",region);
+		formData.append("introduce",introduce);
+		
+		$.ajax({
+			type:"post"
+			,url:"/user/join"
+			,data:formData
+		    ,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
+		   	,processData: false             // 파일 업로드를 위한 필수 설정
+		    ,contentType: false              // 파일 업로드를 위한 필수 설정
+			,success:function(data){
+				if(data.result == "success"){
+					alert("가입 성공");
+					location.href="/user/login/view";
+				}
+				else{
+					alert("가입 실패");
+					return;
+				}
+			}
+			,error:function(){
+				alert("오류발생");
+				return;
+			}
+		})
+		
+		
+	})
+	
+//region 유효성검사: 빈칸만아니게
+	$("#regionInput").on("input",function(){
+		let region = $(this).val();
+		if(region == ""){
+			regionCheck = false;
+		}
+		else{
+			regionCheck = true;
+			
+		}
+		if(!regionCheck){
+			$(".region-input-div").addClass("border-red")
+		}
+		else{
+			$(".region-input-div").removeClass("border-red")
+		}
+		
+		
+		
+	})
+	
+	
+//phonenumber 유효성검사: 정규식 활용
+	$("#phoneInput").on("input",function(){
+		let phoneNumber = $(this).val();
+		//숫자만 입력할수 있도록 하는 유효성검사.
+		let check = /^[0-9]+$/; 
+		if (!check.test(phoneNumber)||phoneNumber == ""||phoneNumber.length>11) {
+			phoneCheck = false;
+		}
+		else{
+			phoneCheck = true;
+		}
+		if(!phoneCheck){
+			$(".phone-input-div").addClass("border-red")
+		}
+		else{
+			$(".phone-input-div").removeClass("border-red")
+		}
+		
+		
+	})
+
+	
+	
+	
+//nickname 유효성 검사: 글자수체크,중복확인
+	$("#nicknameInput").on("input",function(){
+		let nickname = $(this).val();
+		if(nickname == ""){
+			nicknameCheck = false;
+			$(".nickname-input-div").addClass("border-red");
+			return;
+		}
+		$.ajax({
+			type:"post"
+			,url:"/user/join/duplicateNickname"
+			,data:{"nickname":nickname}
+			,success:function(data){
+				if (data.result == "duplicate"){
+					nicknameCheck = false;
+					$(".nickname-input-div").addClass("border-red");
+					return;
+				}
+				else{
+					nicknameCheck = true;
+					$(".nickname-input-div").removeClass("border-red");
+					return;
+				}
+				
+			}
+		})
+
+		
+		
+	})
+	
+//password유효성검사: 글자수 체크하여 passwordCheck 객체값으로 유효성을 저장하고, 빨간색으로 배경이표시되도록 함. 	
+	$("#pwInput").on("input",function(){
+		let password = $("#pwInput").val();
+
+		if(password == ""||password.length<4){
+			passwordCheck = false;
+		}
+		else{
+			passwordCheck = true;
+		}
+		
+		if(!passwordCheck){
+			$(".pw-input-div").addClass("border-red")
+		}
+		else{
+			$(".pw-input-div").removeClass("border-red")
+		}
+
+	})	
+
+//loginId유효성검사: 중복확인 및 글자수 체크하여 idcheck 객체값으로 유효성을 저장하고, 빨간색으로 배경이표시되도록 함. 이거 한박자씩 느리게 발동되는 오류가있음.
+	$("#idInput").on("focus keyup",function(){
+		let loginId = $("#idInput").val();
+
+		if(loginId == ""||loginId.length<4){
+			idCheck = false;
+			$(".id-input-div").addClass("border-red")
+			return;
+		}
+		
 		$.ajax({
 			type:"post"
 			,url:"/user/join/duplicateId"
 			,data:{"loginId":loginId}
 			,success:function(data){
 				if (data.result == "duplicate"){
-					alert("중복된 아이디입니다.");
 					idCheck = false;
-					return;
+					$(".id-input-div").addClass("border-red")
+
 				}
 				else{
-					alert("사용가능한 아이디입니다.");
 					idCheck = true;
-					return;
+					$(".id-input-div").removeClass("border-red")
+
 				}
 				
 			}
@@ -103,14 +276,8 @@ $(document).ready(function(){
 				alert("오류발생");
 			}
 		})
-		
-		if(!idCheck){
-			$(".id-input-div").addClass("border-red")
-		}
-		else{
-			$(".id-input-div").removeClass("border-red")
-		}
-		
+
+
 	})
 	
 	

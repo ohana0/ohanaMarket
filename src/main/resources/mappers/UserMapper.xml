@@ -10,6 +10,17 @@
 		WHERE `loginId` = #{loginId}
 	
 	</select>
+	<select id="countNickname">
+		SELECT count(0)
+		FROM `user`
+		WHERE `nickname` = #{nickname}
+	
+	</select>
+	<select id="getUserByLoginId" resultType="com.ohana0.ohanaMarket.user.domain.User">
+		SELECT `id`,`loginId`,`password`,`nickname`,`profileImagePath`,`phoneNumber`,`introduce`,`region`
+		FROM `user`
+		WHERE `loginId` = #{loginId}
+	</select>
 	
 	
 	<insert id="insertUser" parameterType="map">
