@@ -15,13 +15,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<header>
-			<div class="d-flex align-items-center">
-				<img src="/static/image/logoImage.png" height="75px" class="pl-2">
-				<div id="logoStyle" class="pl-1">OhanaMarket</div>
-			</div>
-			<hr>
-		</header>
+		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<section style="height:400px" class="d-flex justify-content-center">
 			<div class="join-box text-center">
 				<h1 class="pb-3">회원가입</h1>
@@ -66,11 +60,8 @@
 			</div>
 
 		</section>
-		
-		<footer class="d-flex align-items-center">
-			<div id="footerText">Copyright 2023. Ohana0 all rights reserved.</div>
-		</footer>
-	
+		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+
 	</div>
 
 </body>

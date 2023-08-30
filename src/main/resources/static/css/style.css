@@ -33,6 +33,16 @@ footer{
 	margin:1%;
 	
 }
+.nav-btn{
+	
+	height:auto;
+	font-weight:bold;
+	
+}
+.post-card{
+	width:1150px;
+	height:100px;
+}
 .input-box{
 	border:none;
 	width:430px;
