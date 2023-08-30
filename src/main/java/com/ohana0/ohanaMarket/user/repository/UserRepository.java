@@ -15,5 +15,4 @@ public interface UserRepository {
 			, @Param("introduce")String introduce);
 
 	public int countLoginId(@Param("loginId")String loginId);
-
 }
