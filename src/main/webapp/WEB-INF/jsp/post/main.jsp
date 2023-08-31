@@ -36,42 +36,7 @@
 		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 	</div>
-<script>
-$(document).ready(function() {
-	$("#btn").on("click",function(){
-		alert($("#summernote").val());
-		$("#summernote").prop("disabled",true);
-	})
 
-	//여기 아래 부분
-	$('#summernote').summernote({
-		height: 300,			          // 에디터 높이
-		lang: "ko-KR",					// 한글 설정
-		focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		minHeight: null,             // 최소 높이
-		maxHeight: null,             // 최대 높이
-		placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-		toolbar:[
-		 // [groupName,[list of button]]
-		 ['fontname',['fontname']],
-		 ['fontsize',['fontsize']],
-		 ['style',['bold','italic','underline']],
-		 ['color', ['color']],
-		 ['height', ['height']],
-		 ['insert',['picture']]
-		],
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-		,callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-			onImageUpload : function(files) {
-				uploadSummernoteImageFile(files[0],this);
-			}
-		}
-		
-	});
-
-});
-</script>
 
 </body>
 </html>
