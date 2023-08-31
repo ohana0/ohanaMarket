@@ -94,7 +94,10 @@ public class UserRestController {
 		Map<String,String> resultMap = new HashMap<>();
 		if(count == 1) {
 			resultMap.put("result", "success");
+			User user = userService.getUserByLoginId(loginId);
+			session.setAttribute("id", user.getId());
 			session.setAttribute("loginId", loginId);
+			session.setAttribute("profileImagePath", user.getProfileImagePath());
 		}
 		else {
 			resultMap.put("result", "fail");
@@ -104,5 +107,7 @@ public class UserRestController {
 		return resultMap;
 		
 	}
+	
+	
 	
 }

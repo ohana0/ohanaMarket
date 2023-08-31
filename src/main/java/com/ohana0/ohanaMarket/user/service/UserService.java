@@ -55,4 +55,9 @@ public class UserService {
 		}
 	}
 
+	public User getUserByLoginId(String loginId) {
+		User user = userRepository.getUserByLoginId(loginId);
+		return user;
+	}
+
 }

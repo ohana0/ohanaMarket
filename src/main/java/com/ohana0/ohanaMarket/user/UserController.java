@@ -1,5 +1,7 @@
 package com.ohana0.ohanaMarket.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,5 +17,13 @@ public class UserController {
 	public String join() {
 		return "/user/join";
 	}
-
+	
+	@GetMapping("/user/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		session.removeAttribute("profileImagePath");
+		session.removeAttribute("id");
+		
+		return "redirect:/user/login/view";
+	}
 }

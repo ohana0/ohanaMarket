@@ -54,7 +54,7 @@
 					,data:{"loginId":loginId,"password":password}
 					,success:function(data){
 						if(data.result == "success"){
-							location.reload();
+							location.href="/board/post";
 						}
 						else{
 							alert("아이디나 비밀번호가 틀렸습니다.");

@@ -58,7 +58,7 @@ public class FileManager{
 		
 		// 클라이언트에서 접근하는 경로 문자열
 		// 경로 규칙 : /images/10_24654564654/test.png
-		// locahost:8080/images/10_24654564654/test.png
+		// localhost:8080/images/10_24654564654/test.png
 		
 		return "/images" + directoryName + file.getOriginalFilename();
 	}

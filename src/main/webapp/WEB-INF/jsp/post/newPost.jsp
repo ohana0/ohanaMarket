@@ -12,6 +12,11 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	
+	<script src="/static/summernote/summernote-lite.js"></script>
+	<script src="/static/summernote/lang/summernote-ko-KR.js"></script>
+	
+	<link rel="stylesheet" href="/static/summernote/summernote-lite.css">
 </head>
 <body>
 	<div id="wrap">
@@ -19,19 +24,16 @@
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
 			<div>
-				<div class="card post-card"></div>
-				<div class="card post-card"></div>
-				<div class="card post-card"></div>
-				<div class="card post-card"></div>
-				<div class="card post-card"></div>
-				<div class="card post-card"></div>
-				<a href="/board/new?type=post"><button type="button" class="btn btn-warning">새글쓰기</button></a>
+				<br>	
+				<form method="post" class="card post-input-box">
+					<div class="title-input-box d-flex text-center">
+						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" name="title">
+					</div>
+				 	<textarea id="summernote" name="editordata"></textarea>
+					<button id="submitBtn" class="btn btn-secondary btn-block" type="submit">클릭</button>
+				</form>
 			</div>
-			
-		
-		
-		
-		
+
 		</section>
 		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
@@ -45,7 +47,7 @@ $(document).ready(function() {
 
 	//여기 아래 부분
 	$('#summernote').summernote({
-		height: 300,			          // 에디터 높이
+		height: 400,		          // 에디터 높이
 		lang: "ko-KR",					// 한글 설정
 		focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		minHeight: null,             // 최소 높이
@@ -72,6 +74,5 @@ $(document).ready(function() {
 
 });
 </script>
-
 </body>
 </html>
