@@ -25,13 +25,13 @@
 		<section class="d-flex justify-content-center">
 			<div>
 				<br>	
-				<form method="post" class="card post-input-box">
+				<div class="card post-input-box">
 					<div class="title-input-box d-flex text-center">
-						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" name="title">
+						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control">
 					</div>
-				 	<textarea id="summernote" name="editordata"></textarea>
-					<button id="submitBtn" class="btn btn-secondary btn-block" type="submit">클릭</button>
-				</form>
+				 	<textarea id="summernote"></textarea>
+					<button id="submitBtn" class="btn btn-secondary btn-block" type="button">클릭</button>
+				</div>
 			</div>
 
 		</section>
@@ -40,9 +40,10 @@
 	</div>
 <script>
 $(document).ready(function() {
-	$("#btn").on("click",function(){
+	$("#submitBtn").on("click",function(){
 		alert($("#summernote").val());
-		$("#summernote").prop("disabled",true);
+
+		
 	})
 
 	//여기 아래 부분
@@ -66,11 +67,43 @@ $(document).ready(function() {
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		,callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 			onImageUpload : function(files) {
-				uploadSummernoteImageFile(files[0],this);
+				let file = files[0];
+				uploadFile(file,this);
+
+
+
 			}
 		}
 		
 	});
+	
+	function uploadFile(file,editor){
+		let formData = new FormData();
+		formData.append("file",file);
+		
+		$.ajax({
+			type:"post"
+			,url:"/uploadSummernoteImageFile"
+			,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
+			,processData: false             // 파일 업로드를 위한 필수 설정
+			,contentType: false              // 파일 업로드를 위한 필수 설정
+			,data: FormData
+			,function(data){
+				if(data.result =="success"){
+					
+					return data;
+				}
+
+			}
+			,error(){
+				alert("이미지 등록에 오류가 발생했습니다.");
+			}
+		
+		})
+	}
+	
+
+
 
 });
 </script>

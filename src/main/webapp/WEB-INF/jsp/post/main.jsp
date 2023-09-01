@@ -25,7 +25,7 @@
 				<div class="card post-card"></div>
 				<div class="card post-card"></div>
 				<div class="card post-card"></div>
-				<a href="/board/new?type=post"><button type="button" class="btn btn-warning">새글쓰기</button></a>
+				<a href="/board/post/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
 			</div>
 			
 		
