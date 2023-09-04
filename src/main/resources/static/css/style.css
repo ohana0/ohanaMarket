@@ -32,7 +32,7 @@ footer{
 .input-div{
 	width:480px;
 	margin:1%;
-	
+		
 }
 .nav-btn{
 	
@@ -50,7 +50,21 @@ footer{
 	margin-left:10px;
 	
 }
+#titleArea{
+	height:60px
+}
 .post-input-box{
 	width:800px;
 
+}
+.main-title{
+	font-size: 30px;
+	
+}
+.title-box{
+	border-style: solid;
+}
+#contentBox{
+	width:800px;
+	height:800px;
 }

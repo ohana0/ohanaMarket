@@ -18,32 +18,21 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
-			<div>
-<c:forEach var="post" items="${postList }" >
-<a href="/board/post?id=${post.id }">
-				<div class="card post-card">
-					<div class="d-flex justify-content-between align-items-center m-2">
-						<div>
-							<b class="main-title">${post.title }</b>
-							<div>${post.userId }</div>
-						</div>
-						<div class="d-flex align-items-center">
-							<div>${post.createdAt }</div>
-							${post.thumbnail }
-							<div class="card m-2 text-center" style="width:60px;height:60px">${post.commentCount }</div>
-						</div>
-
+			<div id="contentBox" class="card">
+				<div class="d-flex justify-content-between align-items-center p-2 title-box">
+					<h1 id="titleArea">${post.title }</h1>
+					<div class="d-flex align-items-end">
+						<div class="pr-1">written by.</div><div>${post.userId }</div>
 					</div>
+					
 				</div>
-</a>
-</c:forEach>
-
-				<a href="/board/post/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
-			</div>
+				<div id="contentArea">${post.content }</div>
+				
+				
+				
 			
-		
-		
-		
+			
+			</div>
 		
 		</section>
 		

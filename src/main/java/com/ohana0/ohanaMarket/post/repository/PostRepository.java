@@ -14,4 +14,6 @@ public interface PostRepository {
 
 	public List<Post> selectPost();
 
+	public Post selectPostById(@Param("id")int id);
+
 }

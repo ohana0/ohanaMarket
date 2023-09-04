@@ -15,6 +15,11 @@
 		SELECT `title`,`content`,`userId` 
 		FROM `post`
 	</select>
+	<select id="selectPostById" resultType="com.ohana0.ohanaMarket.post.domain.Post" parameterType="int">
+		SELECT `title`,`content`,`userId` 
+		FROM `post`
+		WHERE `id`=#{id}
+	</select>
 
 
 </mapper>

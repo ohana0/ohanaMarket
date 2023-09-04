@@ -1,6 +1,6 @@
 package com.ohana0.ohanaMarket.post.domain;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ public class Post {
 	private int userId;
 	private String title;
 	private String content;
-	private ZonedDateTime createdAt;
-	private ZonedDateTime updatedAt;
+	private Date createdAt;
+	private Date updatedAt;
 	
 }

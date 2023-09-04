@@ -32,32 +32,58 @@ public class PostService {
 		return imagePath;
 	}
 
-	public List<Post> getPostInfo() {
+	public List<PostDetail> getPostInfo() {
 		List<Post> postInfo = postRepository.selectPost();
 		List<PostDetail> postList = new ArrayList<>();
+		
 		for(Post post:postInfo) {
-			String thumbnail = "";
-			if(post.getContent().contains("<img")) {
-		        String imgPattern = "<img\\s+[^>]*?src=\"([^\"]+)\"[^>]*>";
+			String content = post.getContent();
+			String thumbnail;
+			if(content.contains("<img")) {
+				String thumbnailTag = "";
+				int startIndex = content.indexOf("<img");
+				int endIndex = startIndex;
 
-		        // 패턴과 문자열 매칭
-		        Pattern pattern = Pattern.compile(imgPattern);
-		        Matcher matcher = pattern.matcher(html);
+				for(int i = startIndex; i< content.length(); i++) {
+					if(content.charAt(i) == 076) {
+						endIndex = i + 1;
+						break;
+					}
+				}
+				thumbnailTag = content.substring(startIndex,endIndex);
+				thumbnail = thumbnailTag.substring(0, 4)+" style=\"width:80px;height:60px\"" + thumbnailTag.substring(5);
+			}
+			else{
+				thumbnail = "";
 			}
 			
 			
 			PostDetail postDetail = PostDetail.builder()
-			.id(post.getId())
-			.title(post.getTitle())
-			.userLoginId(userService.getLoginIdById(post.getUserId()))
-			.thumbnail(thumbnail)
-			.contentSummary(post.getContent().substring(0,20))
-			.build();
+				.id(post.getId())
+				.title(post.getTitle())
+				.userId(userService.getLoginIdById(post.getUserId()))
+				.thumbnail(thumbnail)
+				.createdAt(post.getCreatedAt())
+				.commentCount(0)//comment기능 추가후 수정예정
+				.build();
 			
 			postList.add(postDetail);
 		}
 		
-		return postInfo;
+		return postList;
+	}
+
+	public PostDetail getPost(int id) {
+		Post post = postRepository.selectPostById(id);
+		PostDetail postDetail =PostDetail.builder()
+				.id(post.getId())
+				.title(post.getTitle())
+				.content(post.getContent())
+				.userId(userService.getLoginIdById(post.getUserId()))
+				.createdAt(post.getCreatedAt())
+				.commentCount(0)//comment기능 추가후 수정예정
+				.build();
+		return postDetail;
 	}
 
 }
