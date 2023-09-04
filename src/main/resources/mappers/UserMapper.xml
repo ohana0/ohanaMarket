@@ -22,6 +22,12 @@
 		WHERE `loginId` = #{loginId}
 	</select>
 	
+	<select id="getUserById" resultType="com.ohana0.ohanaMarket.user.domain.User">
+		SELECT `id`,`loginId`,`password`,`nickname`,`profileImagePath`,`phoneNumber`,`introduce`,`region`
+		FROM `user`
+		WHERE `id` = #{id}
+	</select>
+	
 	
 	<insert id="insertUser" parameterType="map">
 		INSERT INTO `user`

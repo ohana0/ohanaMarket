@@ -21,4 +21,6 @@ public interface UserRepository {
 	public int countNickname(@Param("nickname")String nickname);
 
 	public User getUserByLoginId(@Param("loginId")String loginId);
+
+	public User getUserById(@Param("id")int userId);
 }

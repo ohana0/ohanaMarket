@@ -11,6 +11,10 @@
 		(#{userId},#{title},#{content})
 	
 	</insert>
+	<select id="selectPost">
+		SELECT `title`,`content`,`userId` 
+		FROM `post`
+	</select>
 
 
 </mapper>

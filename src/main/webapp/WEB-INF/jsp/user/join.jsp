@@ -116,10 +116,10 @@ $(document).ready(function(){
 		$.ajax({
 			type:"post"
 			,url:"/user/join"
-			,data:formData
 		    ,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
 		   	,processData: false             // 파일 업로드를 위한 필수 설정
 		    ,contentType: false              // 파일 업로드를 위한 필수 설정
+			,data:formData
 			,success:function(data){
 				if(data.result == "success"){
 					alert("가입 성공");

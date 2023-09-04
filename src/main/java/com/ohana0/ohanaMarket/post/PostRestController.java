@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,12 +39,15 @@ public class PostRestController {
 		return resultMap;
 
 	}
+
 	@PostMapping("/uploadSummernoteImageFile")
-	public Map<String,String> uploadImage(@RequestParam("file") MultipartFile file, HttpSession session) {
+	public Map<String,String> uploadImage(@RequestParam("file") MultipartFile file
+			, HttpSession session
+			, Model model) {
 		String loginId = (String)session.getAttribute("loginId");
 		String imagePath = postService.uploadImage(loginId,file);
 		Map<String,String> resultMap = new HashMap<>();		
-		if(imagePath !=null) {
+		if(!imagePath.isEmpty()) {
 			resultMap.put("result", "success");
 			resultMap.put("url", imagePath);
 			
@@ -54,5 +59,7 @@ public class PostRestController {
 		return resultMap;
 		
 	}
+	
+	
 
 }

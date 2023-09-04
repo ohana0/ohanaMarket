@@ -27,7 +27,7 @@
 				<br>	
 				<div class="card post-input-box">
 					<div class="title-input-box d-flex text-center">
-						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control">
+						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" id="titleInput">
 					</div>
 				 	<textarea id="summernote"></textarea>
 					<button id="submitBtn" class="btn btn-secondary btn-block" type="button">클릭</button>
@@ -41,8 +41,38 @@
 <script>
 $(document).ready(function() {
 	$("#submitBtn").on("click",function(){
-		alert($("#summernote").val());
-
+		let title = $("#titleInput").val();
+		let content = $("#summernote").val();
+		if(title == ""){
+			alert("제목을 입력하세요");
+			return;
+		}
+		else if(content == ""){
+			alert("내용을 입력하세요");
+			return;
+		}
+		
+		///board/post/new/input
+		$.ajax({
+			type:"post"
+			,url:"/board/post/new/input"
+			,data:{"title":title,"content":content}
+			,success:function(data){
+				if(data.result == "success"){
+					
+					location.href="/board/post";
+				}
+				else{
+					alert("업로드에 실패하였습니다");
+					return;
+				}
+				
+			}
+			,error:function(){
+				alert("게시글작성에 오류가 발생하였습니다");
+				return;
+			}
+		})
 		
 	})
 
@@ -67,8 +97,39 @@ $(document).ready(function() {
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		,callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 			onImageUpload : function(files) {
-				let file = files[0];
-				uploadFile(file,this);
+				var summernote = $(this);
+
+				 
+				for(let file of files){
+					
+					let formData = new FormData();
+					formData.append("file",file);
+	
+					$.ajax({
+						type:"post"
+						,url:"/uploadSummernoteImageFile"
+						,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
+						,processData: false             // 파일 업로드를 위한 필수 설정
+						,contentType: false              // 파일 업로드를 위한 필수 설정
+						,data: formData
+						,success:function(data){
+							if(data.result == "success"){
+								//alert("성공!");
+								
+								summernote.summernote("insertImage",data.url);
+							}
+							else{
+								alert("이미지업로드에 실패하였습니다");
+							}
+							
+						}
+						,error:function(){
+							alert("이미지 등록에 오류가 발생했습니다.");
+						}
+					})
+				}
+				 
+				
 
 
 
@@ -76,31 +137,6 @@ $(document).ready(function() {
 		}
 		
 	});
-	
-	function uploadFile(file,editor){
-		let formData = new FormData();
-		formData.append("file",file);
-		
-		$.ajax({
-			type:"post"
-			,url:"/uploadSummernoteImageFile"
-			,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
-			,processData: false             // 파일 업로드를 위한 필수 설정
-			,contentType: false              // 파일 업로드를 위한 필수 설정
-			,data: FormData
-			,function(data){
-				if(data.result =="success"){
-					
-					return data;
-				}
-
-			}
-			,error(){
-				alert("이미지 등록에 오류가 발생했습니다.");
-			}
-		
-		})
-	}
 	
 
 

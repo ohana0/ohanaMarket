@@ -19,7 +19,12 @@
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
 			<div>
-				<div class="card post-card"></div>
+
+				<div class="card post-card d-flex">
+
+				
+				</div>
+
 				<div class="card post-card"></div>
 				<div class="card post-card"></div>
 				<div class="card post-card"></div>
