@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${post.title}</title>
+<title>${trade.title}</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -23,15 +23,15 @@
 		<section class="d-flex justify-content-center">
 			<div id="contentBox" class="card m-2">
 				<div class="p-2 title-box">
-					<h1 id="titleArea" class="m-2">${post.title }</h1>
+					<h1 id="titleArea" class="m-2">${trade.title }</h1>
 					<div class="d-flex justify-content-between m-2">
 						<div>
-							<fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd hh:mm" type="date"/>
+							<fmt:formatDate value="${trade.createdAt}" pattern="yyyy-MM-dd hh:mm" type="date"/>
 	
 
 
 						</div>
-						<div>${post.userId }</div>
+						<div>${trade.userId }</div>
 					</div>
 	
 
@@ -39,11 +39,11 @@
 				</div>
 				<hr>
 				<div class="content-box m-2" style="width:800px">
-					<div>${post.content }</div>
+					<div>${trade.content }</div>
 				</div>
 				<div class="comment-box bg-light m-2">
-					<div>댓글${post.commentCount }개</div>
-<c:forEach var="comment" items="${post.commentList }">
+					<div>댓글${trade.commentCount }개</div>
+<c:forEach var="comment" items="${trade.commentList }">
 					<div class="d-flex m-2">
 						<div class="col-2">${comment.userId }</div>
 						<div class="col-10">${comment.content}</div>
@@ -59,11 +59,11 @@
 				</div>
 				
 				<div class="d-flex justify-content-between m-2">
-					<a href="/board/post/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
+					<a href="/board/trade/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
 					<div class="d-flex">
-						<a href="/board/post/main"><button class="btn btn-primary">목록으로</button></a>
-<c:if test="${post.userId eq loginId }">						
-						<a href="/board/post/update?id=${post.id }"><button class="btn btn-secondary">수정하기</button></a>
+						<a href="/board/trade/main"><button class="btn btn-primary">목록으로</button></a>
+<c:if test="${trade.userId eq loginId }">						
+						<a href="/board/trade/update?id=${trade.id }"><button class="btn btn-secondary">수정하기</button></a>
 						<a href="#"><button class="btn btn-danger" id="deletePost">삭제하기</button></a>
 </c:if>						
 					</div>
@@ -80,15 +80,15 @@
 <script>
 	$(document).ready(function(){
 		$("#deletePost").on("click",function(){
-			let postId = ${post.id};
+			let postId = ${trade.id};
 			$.ajax({
 				type:"delete"
-				,url:"/board/post/delete"
+				,url:"/board/trade/delete"
 				,data:{"postId":postId}
 				,success:function(data){
 					if(data.result == "success"){
 						
-						location.href="/board/post/main";
+						location.href="/board/trade/main";
 					}
 					else{
 						alert("게시글 삭제에 실패하였습니다.");
@@ -107,7 +107,7 @@
 		
 		$("#commentInputBtn").on("click",function(){
 			let content = $("#commentInput").val();
-			let postId = ${post.id};
+			let postId = ${trade.id};
 			let userId = ${id};
 			if(content ==""){
 				alert("댓글을 입력하세요");
@@ -115,7 +115,7 @@
 			}
 			$.ajax({
 				type:"post"
-				,url:"/board/post/new/comment"
+				,url:"/board/trade/new/comment"
 				,data:{"id":userId,"postId":postId,"content":content}
 				,success:function(data){
 					if(data.result == "success"){

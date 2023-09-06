@@ -1,6 +1,7 @@
 package com.ohana0.ohanaMarket.post.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,16 @@ public class PostService {
 			else{
 				thumbnail = "";
 			}
-			
+			Date date = new Date();
+			long millisecond = date.getTime()- post.getCreatedAt().getTime();
+			long day =  (millisecond/(1000*60*60*24));
 			
 			PostDetail postDetail = PostDetail.builder()
 				.id(post.getId())
 				.title(post.getTitle())
 				.userId(userService.getLoginIdById(post.getUserId()))
 				.thumbnail(thumbnail)
+				.dateAgo(day)
 				.createdAt(post.getCreatedAt())
 				.commentCount(commentService.countCommentByPostId(post.getId()))//comment기능 추가후 수정예정
 				.build();
@@ -80,12 +84,16 @@ public class PostService {
 	public PostDetail getPostDetailById(int postId) {
 		Post post = postRepository.selectPostById(postId);
 		
+		Date date = new Date();
+		long millisecond = date.getTime()- post.getCreatedAt().getTime();
+		int day =  (int) Math.floor(millisecond/(1000*60*60*24));
 		PostDetail postDetail =PostDetail.builder()
 				.id(post.getId())
 				.title(post.getTitle())
 				.content(post.getContent())
 				.userId(userService.getLoginIdById(post.getUserId()))
 				.createdAt(post.getCreatedAt())
+				.dateAgo(day)
 				.commentList(commentService.getCommentByPostId(postId))
 				.commentCount(commentService.countCommentByPostId(postId))
 				.build();

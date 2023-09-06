@@ -19,6 +19,8 @@ public class PostDetail {
 	private int commentCount;
 	private Date createdAt;
 	
+	private long dateAgo;
+	
 	private List<CommentDetail> commentList;
 
 }

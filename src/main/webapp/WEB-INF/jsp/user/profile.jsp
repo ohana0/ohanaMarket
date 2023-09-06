@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
+<title>${post.title}</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -16,53 +16,16 @@
 </head>
 <body>
 	<div id="wrap">
+
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
-		<section class="d-flex justify-content-center">
-			<div>
-<c:forEach var="post" items="${postList }" >
-
-<a href="/board/post?id=${post.id }" class="text-secondary">
-				<div class="card post-card">
-					<div class="d-flex justify-content-between align-items-center m-2">
-						<div>
-							<b class="main-title">${post.title }</b>
-							<div>${post.userId }</div>
-						</div>
-						<div class="d-flex align-items-center">
-						
-							
-							${post.thumbnail }
-							<div class="card m-2 text-center" style="width:60px;height:60px">${post.commentCount }</div>
-<c:if test="${post.dateAgo eq 0 }">
-							<div>오늘</div>
-</c:if>
-<c:if test="${post.dateAgo ne 0 }">
-							<div>${post.dateAgo }일전</div>
-</c:if>
-						</div>
-
-					</div>
-				</div>
-</a>
-</c:forEach>
-
-				<a href="/board/post/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
-			</div>
-			
-		
+		<section>
 		
 		
 		
 		</section>
-		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
-<script>
-	$(document).ready(function(){
-		
-		
-	})
-</script>
+
 	</div>
 
 

@@ -17,7 +17,7 @@ public class PostController {
 	private PostService postService;
 	
 	@GetMapping("/board/post/main")
-	public String postView(Model model) {
+	public String postMainView(Model model) {
 		List<PostDetail> postList = postService.getPostInfo();
 		model.addAttribute("postList",postList);
 		return "/post/main";
