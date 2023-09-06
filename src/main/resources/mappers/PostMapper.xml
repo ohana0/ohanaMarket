@@ -12,7 +12,7 @@
 	
 	</insert>
 	<select id="selectPost">
-		SELECT `id`, `title`,`content`,`userId` 
+		SELECT `id`, `title`,`content`,`userId`,`createdAt`
 		FROM `post`
 		ORDER BY `id` DESC
 	</select>

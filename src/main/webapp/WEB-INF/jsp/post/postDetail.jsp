@@ -26,9 +26,10 @@
 					<h1 id="titleArea" class="m-2">${post.title }</h1>
 					<div class="d-flex justify-content-between m-2">
 						<div>
-							<fmt:formatDate value="${post.createdAt}" pattern="M월d일 HH:mm" type="date"/>
+							<fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd mm:ss" type="date"/>
+	
 
-						
+
 						</div>
 						<div>${post.userId }</div>
 					</div>

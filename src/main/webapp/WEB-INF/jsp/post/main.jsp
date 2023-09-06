@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,22 @@
 							<div>${post.userId }</div>
 						</div>
 						<div class="d-flex align-items-center">
-							<div>${post.createdAt }</div>
+							<fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd" type="date" var="createdAt"/>
+							<fmt:parseDate value="${createdAt }" var="createdAtDate" pattern="yyyy-MM-dd"/>
+							<fmt:parseNumber value="${createdAtDate.time / (1000*60*60*24)}" integerOnly="true" var="createdAtNumber"></fmt:parseNumber>
+							<br>
+							<fmt:formatDate value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd mm:ss" type="date" var="now"/>
+							<fmt:parseDate value="${now }" var="nowDate" pattern="yyyy-MM-dd"/>
+							<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDateNumber"></fmt:parseNumber>
+							<c:if test="${nowDateNumber eq createdAtNumber}">
+								<div>오늘</div>
+								
+							</c:if>
+							<c:if test="${nowDateNumber ne createdAtNumber}">
+								<div>${nowDateNumber-createdAtNumber }일전</div>
+							</c:if>
+						
+							
 							${post.thumbnail }
 							<div class="card m-2 text-center" style="width:60px;height:60px">${post.commentCount }</div>
 						</div>
