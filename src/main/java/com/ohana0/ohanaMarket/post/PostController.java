@@ -31,11 +31,19 @@ public class PostController {
 
 	}
 	@GetMapping("/board/post")
-	public String postDetailView(@RequestParam("id")int id,Model model) {
-		PostDetail post = postService.getPost(id);
+	public String postDetailView(@RequestParam("id")int id, Model model) {
+		PostDetail post = postService.getPostDetailById(id);
 		model.addAttribute("post", post);
 		return "/post/postDetail";
 	}
+	@GetMapping("/board/post/update")
+	public String updatePostView(@RequestParam("id") int id,Model model) {
+		PostDetail post = postService.getPostDetailById(id);
+		model.addAttribute("post",post);
+		return"/post/updatePost";
+		
+	}
+	
 	
 	
 

@@ -12,14 +12,24 @@
 	
 	</insert>
 	<select id="selectPost">
-		SELECT `title`,`content`,`userId` 
+		SELECT `id`, `title`,`content`,`userId` 
 		FROM `post`
+		ORDER BY `id` DESC
 	</select>
 	<select id="selectPostById" resultType="com.ohana0.ohanaMarket.post.domain.Post" parameterType="int">
-		SELECT `title`,`content`,`userId` 
+		SELECT `id`,`title`,`content`,`userId`,`createdAt`
 		FROM `post`
 		WHERE `id`=#{id}
 	</select>
+	<delete id="deletePost" parameterType="int">
+		DELETE FROM `post`
+		WHERE `id`=#{id}
+	</delete>
+	<update id="updatePost" parameterType="map">
+		UPDATE `post`
+		SET `title`= #{title},`content`=#{content}
+		WHERE `id`=#{postId}
+	</update>
 
 
 </mapper>

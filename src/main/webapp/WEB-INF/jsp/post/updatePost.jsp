@@ -27,9 +27,10 @@
 				<br>	
 				<div class="card post-input-box">
 					<div class="title-input-box d-flex text-center">
-						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" id="titleInput">
+						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" id="titleInput" value="${post.title }">
+						
 					</div>
-				 	<textarea id="summernote"></textarea>
+				 	<textarea id="summernote">${post.content }</textarea>
 					<button id="submitBtn" class="btn btn-secondary btn-block" type="button">작성</button>
 				</div>
 			</div>
@@ -55,8 +56,8 @@ $(document).ready(function() {
 		///board/post/new/input
 		$.ajax({
 			type:"post"
-			,url:"/board/post/new/input"
-			,data:{"title":title,"content":content}
+			,url:"/board/post/update/input"
+			,data:{"title":title,"content":content,"postId":${post.id}}
 			,success:function(data){
 				if(data.result == "success"){
 					

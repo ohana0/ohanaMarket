@@ -16,4 +16,8 @@ public interface PostRepository {
 
 	public Post selectPostById(@Param("id")int id);
 
+	public int deletePost(@Param("id")int postId);
+
+	public int updatePost(@Param("postId")int postId, @Param("title")String title, @Param("content")String content);
+
 }

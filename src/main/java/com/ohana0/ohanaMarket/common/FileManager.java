@@ -14,7 +14,6 @@ public class FileManager{
 	
 	public static String saveFile(String userId, MultipartFile file) {
 		
-		
 		if(file == null) {
 			return null;
 		}
@@ -43,7 +42,7 @@ public class FileManager{
 			byte[] bytes = file.getBytes();
 			
 			String filePath = directoryPath + file.getOriginalFilename();
-			
+						
 			Path path = Paths.get(filePath);
 			
 			Files.write(path, bytes);

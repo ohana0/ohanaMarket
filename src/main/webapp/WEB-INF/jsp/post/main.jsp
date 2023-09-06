@@ -20,7 +20,8 @@
 		<section class="d-flex justify-content-center">
 			<div>
 <c:forEach var="post" items="${postList }" >
-<a href="/board/post?id=${post.id }">
+
+<a href="/board/post?id=${post.id }" class="text-secondary">
 				<div class="card post-card">
 					<div class="d-flex justify-content-between align-items-center m-2">
 						<div>

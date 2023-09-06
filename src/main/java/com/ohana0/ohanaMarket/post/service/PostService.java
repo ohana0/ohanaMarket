@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ohana0.ohanaMarket.comment.service.CommentService;
 import com.ohana0.ohanaMarket.common.FileManager;
 import com.ohana0.ohanaMarket.post.domain.Post;
 import com.ohana0.ohanaMarket.post.dto.PostDetail;
@@ -21,6 +22,9 @@ public class PostService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	public int addPost(int userId, String title, String content) {
 		int count = postRepository.insertPost(userId,title,content);
@@ -64,7 +68,7 @@ public class PostService {
 				.userId(userService.getLoginIdById(post.getUserId()))
 				.thumbnail(thumbnail)
 				.createdAt(post.getCreatedAt())
-				.commentCount(0)//comment기능 추가후 수정예정
+				.commentCount(commentService.countCommentByPostId(post.getId()))//comment기능 추가후 수정예정
 				.build();
 			
 			postList.add(postDetail);
@@ -73,17 +77,32 @@ public class PostService {
 		return postList;
 	}
 
-	public PostDetail getPost(int id) {
-		Post post = postRepository.selectPostById(id);
+	public PostDetail getPostDetailById(int postId) {
+		Post post = postRepository.selectPostById(postId);
+		
 		PostDetail postDetail =PostDetail.builder()
 				.id(post.getId())
 				.title(post.getTitle())
 				.content(post.getContent())
 				.userId(userService.getLoginIdById(post.getUserId()))
 				.createdAt(post.getCreatedAt())
-				.commentCount(0)//comment기능 추가후 수정예정
+				.commentList(commentService.getCommentByPostId(postId))
+				.commentCount(commentService.countCommentByPostId(postId))
 				.build();
+		
 		return postDetail;
+	}
+
+	public int deletePost(int postId) {
+		int count = postRepository.deletePost(postId);
+		
+		commentService.deleteCommentByPostId(postId);
+		return count;
+	}
+
+	public int updatePost(int postId, String title, String content) {
+		int count = postRepository.updatePost(postId,title,content);
+		return count;
 	}
 
 }

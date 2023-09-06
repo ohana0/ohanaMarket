@@ -1,6 +1,9 @@
 package com.ohana0.ohanaMarket.post.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import com.ohana0.ohanaMarket.comment.dto.CommentDetail;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +18,7 @@ public class PostDetail {
 	private String thumbnail;
 	private int commentCount;
 	private Date createdAt;
+	
+	private List<CommentDetail> commentList;
 
 }
