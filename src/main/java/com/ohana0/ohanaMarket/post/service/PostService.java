@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ohana0.ohanaMarket.comment.service.CommentService;
 import com.ohana0.ohanaMarket.common.FileManager;
+import com.ohana0.ohanaMarket.image.service.ImageService;
 import com.ohana0.ohanaMarket.post.domain.Post;
 import com.ohana0.ohanaMarket.post.dto.PostDetail;
 import com.ohana0.ohanaMarket.post.repository.PostRepository;
@@ -32,11 +33,6 @@ public class PostService {
 		return count;
 	}
 
-	public String uploadImage(String loginId, MultipartFile file) {
-		String imagePath = FileManager.saveFile(loginId, file);
-		return imagePath;
-	}
-
 	public List<PostDetail> getPostInfo() {
 		List<Post> postInfo = postRepository.selectPost();
 		List<PostDetail> postList = new ArrayList<>();
@@ -56,7 +52,7 @@ public class PostService {
 					}
 				}
 				thumbnailTag = content.substring(startIndex,endIndex);
-				thumbnail = thumbnailTag.substring(0, 4)+" style=\"width:80px;height:60px\"" + thumbnailTag.substring(5);
+				thumbnail = thumbnailTag.substring(0, 4)+" class=\"summernote-image\" style=\"width:80px;height:60px\"" + thumbnailTag.substring(5);
 			}
 			else{
 				thumbnail = "";

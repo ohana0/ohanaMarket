@@ -105,7 +105,9 @@ $(document).ready(function() {
 					
 					let formData = new FormData();
 					formData.append("file",file);
-	
+					let postId = ${post.id}
+					formData.append("postId",postId);
+
 					$.ajax({
 						type:"post"
 						,url:"/uploadSummernoteImageFile"

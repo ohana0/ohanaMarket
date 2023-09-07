@@ -12,6 +12,7 @@ public class Post {
 	private String title;
 	private String content;
 	private Date createdAt;
+	
 	private Date updatedAt;
 	
 }

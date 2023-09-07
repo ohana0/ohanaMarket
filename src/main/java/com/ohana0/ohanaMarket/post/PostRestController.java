@@ -21,9 +21,6 @@ public class PostRestController {
 	@Autowired
 	private PostService postService;
 	
-	@Autowired
-	private ImageService imageService;
-	
 	@PostMapping("/board/post/new/input")
 	public Map<String,String> createPost(
 			@RequestParam("title")String title
@@ -44,30 +41,7 @@ public class PostRestController {
 
 	}
 
-	@PostMapping("/uploadSummernoteImageFile")
-	public Map<String,String> uploadImage(@RequestParam("file") MultipartFile file
-			, HttpSession session
-			,@RequestParam(value="postId",required=false) Integer postId
-			, Model model) {
-		String loginId = (String)session.getAttribute("loginId");
-		String imagePath = postService.uploadImage(loginId,file);
-		Map<String,String> resultMap = new HashMap<>();		
-		if(!imagePath.isEmpty()) {
-			if(postId == null) {
-				postId = 0;
-			}
-			imageService.saveImageFile((int)session.getAttribute("id"), file, postId);
-			resultMap.put("result", "success");
-			resultMap.put("url", imagePath);
-			
-		}
-		else {
-			resultMap.put("result", "fail");
-		}
-		
-		return resultMap;
-		
-	}
+
 	@DeleteMapping("/board/post/delete")
 	public Map<String,String> deletePost(@RequestParam("postId")int postId){
 		int count = postService.deletePost(postId);
