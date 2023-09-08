@@ -25,5 +25,9 @@ public class TradeController {
 		
 		return "/trade/main";
 	}
+	@GetMapping("/board/trade/new")
+	public String newTrade() {
+		return "/trade/newPost";
+	}
 	
 }

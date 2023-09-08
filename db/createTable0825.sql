@@ -35,7 +35,7 @@ CREATE TABLE `trade`(
     `title` VARCHAR(32) NOT NULL,
     `content` TEXT NOT NULL,
     `price` INT NOT NULL,
-    `type` VARCHAR(4) NOT NULL,
+    `type` VARCHAR(16) NOT NULL,
     `tradeLocation` VARCHAR(128),
     `state` VARCHAR(4) NOT NULL,
 	`createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

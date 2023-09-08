@@ -38,12 +38,10 @@ public class TradeService {
 		List<Trade> tradeOriginalList = tradeRepository.getTradeList();
 		List<TradeDetail> tradeList = new ArrayList<>();
 		
-		String userId = userService.getLoginIdById(tradeOriginalList.get(0).getUserId());
-		
-		
 		for(Trade trade:tradeOriginalList) {
 			String thumbnail = imageService.getThumbnail(trade.getId(),"trade");
-						
+			String userId = userService.getLoginIdById(trade.getUserId()); 
+			
 			TradeDetail tradeDetail = TradeDetail.builder()
 					.id(trade.getId())
 					.content(trade.getContent())

@@ -26,11 +26,43 @@
 			<div>
 				<br>	
 				<div class="card post-input-box">
-					<div class="title-input-box d-flex text-center">
-						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" id="titleInput">
+					<div class="title-input-box d-flex text-center m-2">
+						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label>
+						<input class="form-control" id="titleInput">
 					</div>
-				 	<textarea id="summernote"></textarea>
-					<button id="submitBtn" class="btn btn-secondary btn-block" type="button">작성</button>
+					<div class="d-flex">
+						<div class="content-input-area col-8">
+						
+						 	<textarea class="form-control" rows="15" id="contentInput"></textarea>
+						
+						</div>
+						
+						<div class="price-type-location-area col-4">
+							<br>
+							<div class="price-area d-flex m-2">
+								<label class="col-2 p-0" >가격</label>
+								<input id="priceInput" type="number" class="form-control">
+							</div>
+							<div class="type-area m-2">
+								<label><input type="radio" name="type" value="delivery">택배</label>
+								<br>
+								<label><input type="radio" name="type" value="direct">직거래</label>
+							</div>
+							<div class="trade-location-area m-2">
+								<div>여기는 지도입력이들어갈 자리임</div>
+								<input id="locationInput" type="text" placeholder="일단 대충 text입력으로놔둠" class="form-control">
+							</div>
+							<div class="image-input-area m-2">
+								<label>이미지 등록
+									<input id="imageInput" type="file" class="form-control" accept="image/*" multiple/>
+								</label>
+								
+							</div>
+						
+						</div>
+				
+					</div>
+					<button id="submitBtn" class="btn btn-secondary btn-block mt-2" type="button">작성</button>
 				</div>
 			</div>
 
@@ -40,8 +72,71 @@
 	</div>
 <script>
 $(document).ready(function() {
+	$("#submitBtn").on("click",function(){
+		let title = $("#titleInput").val();
+		let content = $("#contentInput").val();
+		let location = $("#locationInput").val();
+		let price = $("#priceInput").val();
+		let type =  document.getElementsByName('type');
+	    var fileInput = document.getElementById("imageInput");
+		let files = fileInput.files;	
+		let formData = new FormData();
+		
+		if(title == ""){
+			alert("제목을 입력하세요");
+			return;
+		}
+		if(content == "" || price == "" || type == ""){
+			alert("내용을 입력하세요");
+			return;
+		}
+		if(type == "direct" && location == ""){
+			alert("거래장소를 입력하세요");
+			return;
+		}
+		
+		formData.append("title",title);
+		formData.append("content",content);
+		formData.append("price",price);
+		formData.append("type",type);
+		formData.append("tradeLocation",location);
+		for(let i = 0; i< files.length; i++){
+			formData.append("images",files[i]);
+		}
 
-});
+
+		$.ajax({
+			type:"post"
+			,url:"/board/trade/new/input"
+			,data:formData
+			,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
+			,processData: false             // 파일 업로드를 위한 필수 설정
+			,contentType: false              // 파일 업로드를 위한 필수 설정
+			,success:function(data){
+				if(data.result == "success"){
+					location.href = "/board/trade/main";
+				} 
+				else{
+					alert("거래등록에 실패하였습니다");
+				}
+				
+			}
+			,error:function(){
+				alert("거래등록과정에서 오류가 발생하였습니다");
+			}
+			
+			
+		})
+		
+		
+		
+		
+		
+		
+	})
+		
+})
+
 </script>
 </body>
 </html>

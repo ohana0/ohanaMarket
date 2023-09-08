@@ -25,11 +25,11 @@ public class TradeRestController {
 			,@RequestParam("tradeLocation")String tradeLocation
 			,@RequestParam("price")int price
 			,@RequestParam("type")String type
-			,@RequestParam("state")String state
-			,@RequestParam("images")List<MultipartFile> files){
-		int userId = (Integer)session.getAttribute("id");
+			,@RequestParam(value="images",required=false)List<MultipartFile> files){
 		
+		int userId = (int)session.getAttribute("id");
 		
+		String state = "거래등록";
 		int count = tradeService.addTrade(userId,title,content,tradeLocation,price,type,state,files);
 		
 		Map<String,String> resultMap = new HashMap<>();

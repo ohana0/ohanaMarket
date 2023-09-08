@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ohana0.ohanaMarket.trade.repository.TradeRepository">
-	<insert id="insertTradeGetId" parameterType="map">
+	<insert id="insertTradeGetId" parameterType="map" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `trade`
 		(`userId`,`title`,`content`,`tradeLocation`,`price`,`type`,`state`)
 		VALUE
-		(#{userId},#{title},#{content},#{tradeLocateion},#{price},#{type},#{state})
-		SELECT LAST_INSERT_ID();
+		(#{userId},#{title},#{content},#{tradeLocation},#{price},#{type},#{state})
 	</insert>
 	<select id="getTradeList">
+	
 		SELECT `userId`,`title`,`content`,`tradeLocation`,`price`,`type`,`state`
 		FROM `trade`
 	</select>
