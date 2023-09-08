@@ -14,7 +14,7 @@ public class Trade {
 	private String tradeLocation;
 	private String state;
 	private Date createdAt;
-	private Date updatedate;
+	private Date updatedAt;
 
 
 }

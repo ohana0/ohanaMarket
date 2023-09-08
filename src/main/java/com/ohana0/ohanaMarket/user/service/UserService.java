@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ohana0.ohanaMarket.common.EncryptUtils;
-import com.ohana0.ohanaMarket.common.FileManager;
+import com.ohana0.ohanaMarket.image.service.ImageService;
 import com.ohana0.ohanaMarket.user.domain.User;
 import com.ohana0.ohanaMarket.user.repository.UserRepository;
 
@@ -16,11 +16,12 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+	@Autowired
+	private ImageService imageService;
 
 	public int addUser(String loginId, String password, String nickname, MultipartFile profileImage, String region,
 			String phoneNumber, String introduce) {		
-		String profileImagePath = FileManager.saveFile(loginId, profileImage);
+		String profileImagePath = imageService.saveImageFile(loginId, profileImage, introduce, null);
 		String encryptPassword = EncryptUtils.md5(password);
 		
 		
@@ -59,6 +60,7 @@ public class UserService {
 	}
 
 	public String getLoginIdById(int userId) {
+		
 		User user = userRepository.getUserById(userId);
 		String loginId = user.getLoginId();
 		return loginId;

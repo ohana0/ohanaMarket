@@ -12,7 +12,7 @@ public class FileManager{
 	
 	public static final String FILE_UPLOAD_PATH = "D:\\김동휘\\springProject\\files\\OhanaMarket"; 
 	
-	public static String saveFile(String userId, MultipartFile file) {
+	public static String saveFile(String userId, String type, MultipartFile file) {
 		
 		if(file == null) {
 			return null;
@@ -25,7 +25,7 @@ public class FileManager{
 		// UNIX TIME : 1970년 1월 1일 부터 흐른 시간을 milli second 로 표현한 방식
 		// 폴더 이름 예시 : /10_24654564654/
 		
-		String directoryName = "/" + userId + "_" + System.currentTimeMillis() + "/";
+		String directoryName = "/" + userId + "_" + type + "_" + System.currentTimeMillis() + "/";
 		
 		// 폴더 생성 (디렉토리생성)
 		String directoryPath = FILE_UPLOAD_PATH + directoryName;

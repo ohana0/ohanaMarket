@@ -7,9 +7,14 @@
 
 	<insert id="insertImage" parameterType="map">
 		INSERT INTO `image`
-		(`postId`,`url`)
+		(`postId`,`url`,`type`)
 		VALUE
-		(#{postId},#{url})
+		(#{postId},#{url},#{type})
 	
 	</insert>
+	<select id="selectThumbnail" parameterType="map">
+		SELECT `url` FROM `image`
+		WHERE `postId`=#{postId} AND `type` = #{type}
+		LIMIT 1
+	</select>
 </mapper>

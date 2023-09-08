@@ -13,19 +13,20 @@ public class ImageService {
 	@Autowired
 	private ImageRepository imageRepository;
 	
-	public String saveImageFile(String userId,MultipartFile file,Integer postId) {
-
-
-		String url = FileManager.saveFile(userId, file);
+	public String saveImageFile(String userId,MultipartFile file,String type,Integer postId){
 		
-		int count = imageRepository.insertImage(postId,url);
-		if(count != 1) {
-			return null;
-		}
-		else {
-			
-			return url;
-		}
+
+		String url = FileManager.saveFile(userId, type,file);
+		
+		imageRepository.insertImage(postId, url, type);
+		
+		return url;
 	}
+
+	public String getThumbnail(int id, String type) {
+		String url = imageRepository.selectThumbnail(id,type);
+		return url;
+	}
+
 
 }

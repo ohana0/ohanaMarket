@@ -22,6 +22,7 @@ public class TradeRestController {
 	public Map<String,String> createTrade(HttpSession session
 			,@RequestParam("title")String title
 			,@RequestParam("content")String content
+			,@RequestParam("tradeLocation")String tradeLocation
 			,@RequestParam("price")int price
 			,@RequestParam("type")String type
 			,@RequestParam("state")String state
@@ -29,7 +30,7 @@ public class TradeRestController {
 		int userId = (Integer)session.getAttribute("id");
 		
 		
-		int count = tradeService.addTrade(userId,title,content,price,type,state,files);
+		int count = tradeService.addTrade(userId,title,content,tradeLocation,price,type,state,files);
 		
 		Map<String,String> resultMap = new HashMap<>();
 		if(count > 0) {

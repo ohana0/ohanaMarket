@@ -30,13 +30,16 @@
 						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label><input class="form-control" id="titleInput">
 					</div>
 				 	<textarea id="summernote"></textarea>
-				 	<div class="thumbnail-select-area">
+				 	<!-- 
+				 	
+				 	 <div class="thumbnail-select-area">
 				 		<button type="button" class="btn btn-primary btn-block">이미지 펼치기</button>
 				 		<div id="imageSelectArea">
 				 			
 				 		
 				 		</div>
 				 	</div>
+				 	 -->
 				 	
 					<button id="submitBtn" class="btn btn-secondary btn-block" type="button">작성</button>
 				</div>
@@ -108,7 +111,7 @@ $(document).ready(function() {
 				var summernote = $(this);
 
 				 
-				let count = 1;
+				//let count = 1;
 				for(let file of files){
 					let formData = new FormData();
 					formData.append("file",file);
@@ -125,8 +128,8 @@ $(document).ready(function() {
 								//alert("성공!");
 								
 								summernote.summernote("insertImage",data.url);
-								$("#imageSelectArea").append("<a class\"image-select\"><img src=\""+data.url+"\" id=\"image"+count+"\"width=\"60px\" height=\"60px\"></a>")
-								count++;
+								//$("#imageSelectArea").append("<a class\"image-select\"><img src=\""+data.url+"\" id=\"image"+count+"\"width=\"60px\" height=\"60px\"></a>")
+								//count++;
 							}
 							else{
 								alert("이미지업로드에 실패하였습니다");

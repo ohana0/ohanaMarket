@@ -6,11 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ohana0.ohanaMarket.comment.service.CommentService;
-import com.ohana0.ohanaMarket.common.FileManager;
-import com.ohana0.ohanaMarket.image.service.ImageService;
 import com.ohana0.ohanaMarket.post.domain.Post;
 import com.ohana0.ohanaMarket.post.dto.PostDetail;
 import com.ohana0.ohanaMarket.post.repository.PostRepository;

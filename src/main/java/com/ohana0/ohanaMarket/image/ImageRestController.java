@@ -42,7 +42,7 @@ public class ImageRestController {
 			postId = 0;
 		}
 		
-		String imagePath = imageService.saveImageFile(loginId, file, postId);
+		String imagePath = imageService.saveImageFile(loginId, file,"post", postId);
 		
 		
 		
@@ -56,7 +56,7 @@ public class ImageRestController {
 		}
 		
 		return resultMap;
-		
+			
 	}
 
 }

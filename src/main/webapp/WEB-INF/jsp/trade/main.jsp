@@ -22,37 +22,21 @@
 			<div>
 <c:forEach var="trade" items="${tradeList }" >
 
-<a href="/board/trade?id=${trade.id }" class="text-secondary">
-				<div class="card post-card">
-					<div class="d-flex justify-content-between align-items-center m-2">
-						<div>
-							<b class="main-title">${trade.title }</b>
-							<div>${trade.userId }</div>
-						</div>
-						<div class="d-flex align-items-center">
-						
-							
-							${trade.thumbnail }
-							<div class="card m-2 text-center" style="width:60px;height:60px">${trade.commentCount }</div>
-							<fmt:formatDate value="${trade.createdAt}" pattern="yyyy-MM-dd" type="date" var="createdAt"/>
-							<fmt:parseDate value="${createdAt }" var="createdAtDate" pattern="yyyy-MM-dd"/>
-							<fmt:parseNumber value="${createdAtDate.time / (1000*60*60*24)}" integerOnly="true" var="createdAtNumber"></fmt:parseNumber>
-							<br>
-							<fmt:formatDate value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd mm:ss" type="date" var="now"/>
-							<fmt:parseDate value="${now }" var="nowDate" pattern="yyyy-MM-dd"/>
-							<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDateNumber"></fmt:parseNumber>
-							<c:if test="${nowDateNumber eq createdAtNumber}">
-								<div>오늘</div>
-								
-							</c:if>
-							<c:if test="${nowDateNumber ne createdAtNumber}">
-								<div>${nowDateNumber-createdAtNumber }일전</div>
-							</c:if>
-						</div>
-
-					</div>
-				</div>
-</a>
+				<a href="/board/trade?id=${trade.id }" class="text-secondary">
+								<div class="card post-card">
+									<div class="d-flex justify-content-between align-items-center m-2">
+										<div>
+											<b class="main-title">${trade.title }</b>
+											<div>${trade.userId }</div>
+										</div>
+										<div class="d-flex align-items-center">
+											<img src="${trade.thumbnailImagePath }">
+				
+										</div>
+				
+									</div>
+								</div>
+				</a>
 </c:forEach>
 
 				<a href="/board/trade/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
