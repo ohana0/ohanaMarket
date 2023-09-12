@@ -31,7 +31,7 @@ public class TradeService {
 			String userIdStr = userService.getLoginIdById(userId);
 			imageService.saveImageFile(userIdStr, file,"trade", postId);
 		}
-		return 1;
+		return postId;
 	}
 
 	public List<TradeDetail> getTradeList() {

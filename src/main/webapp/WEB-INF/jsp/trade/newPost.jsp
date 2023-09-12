@@ -44,7 +44,7 @@
 								<input id="priceInput" type="number" class="form-control">
 							</div>
 							<div class="type-area m-2">
-								<label><input type="radio" name="type" value="delivery">택배</label>
+								<label><input type="radio" name="type" value="delivery" checked>택배</label>
 								<br>
 								<label><input type="radio" name="type" value="direct">직거래</label>
 							</div>
@@ -77,7 +77,7 @@ $(document).ready(function() {
 		let content = $("#contentInput").val();
 		let location = $("#locationInput").val();
 		let price = $("#priceInput").val();
-		let type =  document.getElementsByName('type');
+		var type = $('input[name="type"]:checked').val();
 	    var fileInput = document.getElementById("imageInput");
 		let files = fileInput.files;	
 		let formData = new FormData();

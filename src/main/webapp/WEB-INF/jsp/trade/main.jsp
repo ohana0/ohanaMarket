@@ -30,8 +30,9 @@
 											<div>${trade.userId }</div>
 										</div>
 										<div class="d-flex align-items-center">
-											<img src="${trade.thumbnailImagePath }">
-				
+<c:if test="${trade.thumbnailImagePath ne null }">										
+											<img src="${trade.thumbnailImagePath }" width="60px" height="60px">
+</c:if>
 										</div>
 				
 									</div>

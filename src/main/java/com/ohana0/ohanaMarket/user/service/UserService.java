@@ -21,7 +21,7 @@ public class UserService {
 
 	public int addUser(String loginId, String password, String nickname, MultipartFile profileImage, String region,
 			String phoneNumber, String introduce) {		
-		String profileImagePath = imageService.saveImageFile(loginId, profileImage, introduce, null);
+		String profileImagePath = imageService.saveImageFile(loginId, profileImage, "user", null);
 		String encryptPassword = EncryptUtils.md5(password);
 		
 		
