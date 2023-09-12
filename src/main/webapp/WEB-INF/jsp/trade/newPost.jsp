@@ -26,9 +26,9 @@
 			<div>
 				<br>	
 				<div class="card post-input-box">
-					<div class="title-input-box d-flex text-center m-2">
-						<label class="col-2 p-1 m-1" style="font-weight:bold;font-size:20px">제목</label>
-						<input class="form-control" id="titleInput">
+					<div class="title-input-box">
+						<label class="p-2 m-2 d-flex w-100 text-center align-items-center" style="font-weight:bold;font-size:20px"><div>제목</div>
+						<input class="form-control col-10 m-2" id="titleInput"></label>
 					</div>
 					<div class="d-flex">
 						<div class="content-input-area col-8">
@@ -39,9 +39,9 @@
 						
 						<div class="price-type-location-area col-4">
 							<br>
-							<div class="price-area d-flex m-2">
-								<label class="col-2 p-0" >가격</label>
-								<input id="priceInput" type="number" class="form-control">
+							<div class="price-area m-2">
+								<label class="p-1 d-flex align-items-center w-100"><div class="mr-1">가격</div>
+								<input id="priceInput" type="number" class="form-control col-9"></label>
 							</div>
 							<div class="type-area m-2">
 								<label><input type="radio" name="type" value="delivery" checked>택배</label>
@@ -75,7 +75,7 @@ $(document).ready(function() {
 	$("#submitBtn").on("click",function(){
 		let title = $("#titleInput").val();
 		let content = $("#contentInput").val();
-		let location = $("#locationInput").val();
+		let tradeLocation = $("#locationInput").val();
 		let price = $("#priceInput").val();
 		var type = $('input[name="type"]:checked').val();
 	    var fileInput = document.getElementById("imageInput");
@@ -90,7 +90,7 @@ $(document).ready(function() {
 			alert("내용을 입력하세요");
 			return;
 		}
-		if(type == "direct" && location == ""){
+		if(type == "direct" && tradeLocation == ""){
 			alert("거래장소를 입력하세요");
 			return;
 		}
@@ -99,10 +99,11 @@ $(document).ready(function() {
 		formData.append("content",content);
 		formData.append("price",price);
 		formData.append("type",type);
-		formData.append("tradeLocation",location);
+		formData.append("tradeLocation",tradeLocation);
 		for(let i = 0; i< files.length; i++){
-			formData.append("images",files[i]);
+			formData.append("files",files[i]);
 		}
+
 
 
 		$.ajax({
@@ -114,17 +115,18 @@ $(document).ready(function() {
 			,contentType: false              // 파일 업로드를 위한 필수 설정
 			,success:function(data){
 				if(data.result == "success"){
-					location.href = "/board/trade/main";
-				} 
-				else{
-					alert("거래등록에 실패하였습니다");
+
+					location.href="/board/trade/main";
 				}
-				
+				else{
+					alert("업로드에 실패했습니다");
+					return;
+				}
 			}
 			,error:function(){
-				alert("거래등록과정에서 오류가 발생하였습니다");
+				alert("에러가 발생했습니다.");
 			}
-			
+		
 			
 		})
 		

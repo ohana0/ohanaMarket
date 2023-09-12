@@ -21,18 +21,6 @@ public class TradeService {
 	private ImageService imageService;
 	@Autowired
 	private UserService userService;
-	
-	public int addTrade(int userId, String title, String content, String tradeLocation,int price, String type, String state,
-			List<MultipartFile> files) {
-		int postId = tradeRepository.insertTradeGetId(userId,title,content,tradeLocation,price,type,state);
-		
-		
-		for(MultipartFile file:files) {
-			String userIdStr = userService.getLoginIdById(userId);
-			imageService.saveImageFile(userIdStr, file,"trade", postId);
-		}
-		return postId;
-	}
 
 	public List<TradeDetail> getTradeList() {
 		List<Trade> tradeOriginalList = tradeRepository.getTradeList();
@@ -58,6 +46,21 @@ public class TradeService {
 		
 		
 		return tradeList;
+	}
+
+	public int addTradeByEntitiy(Trade trade, List<MultipartFile> files) {
+		int postId = tradeRepository.insertTradeGetId(trade);
+	
+		int userId = trade.getUserId();
+
+		if(files != null) {
+			
+			for(MultipartFile file:files) {
+				String userIdStr = userService.getLoginIdById(userId);
+				imageService.saveImageFile(userIdStr, file,"trade", postId);
+			}
+		}
+		return postId;
 	}
 
 
