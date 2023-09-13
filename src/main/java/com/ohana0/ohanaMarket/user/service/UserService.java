@@ -45,8 +45,13 @@ public class UserService {
 
 
 	public int login(String loginId, String password) {
+		
+		
 		User user = userRepository.getUserByLoginId(loginId);
-		if(user.getPassword().equals(EncryptUtils.md5(password)) ) {
+		if(user == null) {
+			return 0;
+		}
+		else if(user.getPassword().equals(EncryptUtils.md5(password)) ) {
 			return 1;
 		}
 		else {

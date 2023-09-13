@@ -9,6 +9,7 @@
 		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
 		FROM `trade`
 		ORDER BY `id` DESC
+		LIMIT 10
 	</select>
 	
 	<insert id="insertTradeGetId" parameterType="com.ohana0.ohanaMarket.trade.domain.Trade"

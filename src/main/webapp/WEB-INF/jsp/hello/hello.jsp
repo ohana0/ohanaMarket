@@ -20,9 +20,8 @@
 </head>
 <body>
 	<h1 style="text-weight:bold">helloWorld!</h1>
-	<!-- 
-	 -->
-	<input type="file">
+
+
 	
 	
 </body>

@@ -25,9 +25,9 @@
 				<div class="image-box">
 					<div class="d-flex">
 <c:forEach var="url" items="${trade.imageUrlList }" varStatus = "status">
-						<img src="${url }" width="300px" class="trade-image-${status.index } trade-image">
+						<img src="${url }" width="300px">
 </c:forEach>					
-					</div>		
+					</div>
 				</div>
 				<div class="content-area">
 					<h1>${trade.title }</h1>

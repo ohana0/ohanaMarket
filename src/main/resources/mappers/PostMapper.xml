@@ -27,7 +27,7 @@
 	</delete>
 	<update id="updatePost" parameterType="map">
 		UPDATE `post`
-		SET `title`= #{title},`content`=#{content}
+		SET `title`= #{title},`content`=#{content}, `updatedAt`=now()
 		WHERE `id`=#{postId}
 	</update>
 

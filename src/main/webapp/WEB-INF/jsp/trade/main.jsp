@@ -55,7 +55,8 @@
 		$("#next10Trade").on("click",function(){
 			$.ajax({
 				type:"get"
-				,
+				,url:"/trade/next10Post"
+				,data:{"id":}
 			})
 		})
 		
