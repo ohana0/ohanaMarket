@@ -17,4 +17,9 @@
 		WHERE `postId`=#{postId} AND `type` = #{type}
 		LIMIT 1
 	</select>
+	<select id="selectImage" parameterType="map" resultType="com.ohana0.ohanaMarket.image.domain.Image">
+		SELECT `postId`,`url`,`type`
+		FROM `image`
+		WHERE `postId`=#{postId} AND `type` = #{type}
+	</select>
 </mapper>

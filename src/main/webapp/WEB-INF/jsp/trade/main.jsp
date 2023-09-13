@@ -19,7 +19,7 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
-			<div>
+			<div id="contentListArea">
 <c:forEach var="trade" items="${tradeList }" >
 
 				<a href="/board/trade?id=${trade.id }" class="text-secondary">
@@ -39,8 +39,7 @@
 								</div>
 				</a>
 </c:forEach>
-
-				<a href="/board/trade/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
+<button type="button" class="btn btn-secondary" id="next10trade">다음 10개 보기</button>
 			</div>
 			
 		
@@ -48,11 +47,17 @@
 		
 		
 		</section>
+		<a href="/board/trade/new"><button type="button" class="btn btn-warning m-4">새글쓰기</button></a>
 		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 <script>
 	$(document).ready(function(){
-		
+		$("#next10Trade").on("click",function(){
+			$.ajax({
+				type:"get"
+				,
+			})
+		})
 		
 	})
 </script>

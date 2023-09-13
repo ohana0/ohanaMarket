@@ -4,6 +4,10 @@
 	margin:0 auto;
 	border-style:solid;
 }
+#contentListArea{
+	height:1000px;
+	overflow:auto;
+}
 #logoStyle{
 	font-size: 65px;
 	font-weight:bold;
@@ -33,6 +37,13 @@ footer{
 	width:480px;
 	margin:1%;
 		
+}
+.image-box{
+	overflow:auto;
+}
+#contentBox{
+	width:820px;
+
 }
 .nav-btn{
 	

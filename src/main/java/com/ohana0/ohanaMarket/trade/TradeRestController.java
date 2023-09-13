@@ -40,13 +40,13 @@ public class TradeRestController {
 				.state("거래등록")
 				.build();
 
-		int postId = tradeService.addTradeByEntitiy(trade,files);
+		int count = tradeService.addTradeByEntitiy(trade,files);
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(postId != 0) {
+		if(count > 0) {
 			resultMap.put("result", "success");
-			resultMap.put("postId", String.valueOf(postId));
+			resultMap.put("postId", String.valueOf(trade.getId()));
 		}
 		else {
 			resultMap.put("result", "false");

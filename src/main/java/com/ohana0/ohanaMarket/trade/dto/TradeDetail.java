@@ -22,7 +22,7 @@ public class TradeDetail {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	private List<Image> imageList;
+	private List<String> imageUrlList;
 	private String thumbnailImagePath;
 
 }

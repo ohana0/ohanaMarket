@@ -19,7 +19,7 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
-			<div>
+			<div id="contentListArea">
 <c:forEach var="post" items="${postList }" >
 
 <a href="/board/post?id=${post.id }" class="text-secondary">
@@ -47,7 +47,6 @@
 </a>
 </c:forEach>
 
-				<a href="/board/post/new"><button type="button" class="btn btn-warning">새글쓰기</button></a>
 			</div>
 			
 		
@@ -55,6 +54,7 @@
 		
 		
 		</section>
+				<a href="/board/post/new" class="m-4"><button type="button" class="btn btn-warning">새글쓰기</button></a>
 		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 <script>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ohana0.ohanaMarket.image.domain.Image;
 import com.ohana0.ohanaMarket.image.service.ImageService;
 import com.ohana0.ohanaMarket.trade.domain.Trade;
 import com.ohana0.ohanaMarket.trade.dto.TradeDetail;
@@ -49,9 +50,10 @@ public class TradeService {
 	}
 
 	public int addTradeByEntitiy(Trade trade, List<MultipartFile> files) {
-		int postId = tradeRepository.insertTradeGetId(trade);
+		int count = tradeRepository.insertTradeGetId(trade);
 	
 		int userId = trade.getUserId();
+		int postId = trade.getId();
 
 		if(files != null) {
 			
@@ -60,7 +62,31 @@ public class TradeService {
 				imageService.saveImageFile(userIdStr, file,"trade", postId);
 			}
 		}
-		return postId;
+		return count;
+	}
+
+	public TradeDetail getTradeById(int postId) {
+		Trade trade = tradeRepository.selectTradeById(postId);
+		List<String> imageUrlList = new ArrayList<>();
+		List<Image> imageList = imageService.getImageList(postId,"trade");
+		for(Image image:imageList) {
+			imageUrlList.add(image.getUrl());
+		}
+		
+		TradeDetail tradeDetail = TradeDetail.builder()
+				.id(trade.getId())
+				.userId(userService.getLoginIdById(trade.getUserId()))
+				.title(trade.getTitle())
+				.content(trade.getContent())
+				.price(trade.getPrice())
+				.type(trade.getType())
+				.tradeLocation(trade.getTradeLocation())
+				.state(trade.getState())
+				.imageUrlList(imageUrlList)
+				.build();
+				
+						
+		return tradeDetail;
 	}
 
 

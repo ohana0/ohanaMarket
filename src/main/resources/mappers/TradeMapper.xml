@@ -6,19 +6,24 @@
 <mapper namespace="com.ohana0.ohanaMarket.trade.repository.TradeRepository">
 	<select id="getTradeList">
 
-		SELECT `id`, `userId`,`title`,`content`,`tradeLocation`,`price`,`type`,`state`
+		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
 		FROM `trade`
 		ORDER BY `id` DESC
 	</select>
 	
 	<insert id="insertTradeGetId" parameterType="com.ohana0.ohanaMarket.trade.domain.Trade"
-	useGeneratedKeys="true" keyProperty='id'>
+	useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `trade`
-		(`userId`,`title`,`content`,`tradeLocation`,`price`,`type`,`state`)
-		VALUE
-		(#{userId},#{title},#{content},#{tradeLocation},#{price},#{type},#{state});
+		(`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`)
+		VALUES
+		(#{userId},#{title},#{content},#{price},#{type},#{tradeLocation},#{state},now(),now());
 	</insert>
 	
+	<select id="selectTradeById" parameterType="int" resultType="com.ohana0.ohanaMarket.trade.domain.Trade">
+		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
+		FROM `trade`
+		WHERE `id`=#{postId}
+	</select>
 	
 
 </mapper>

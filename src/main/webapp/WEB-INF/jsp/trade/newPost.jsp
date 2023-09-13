@@ -116,7 +116,6 @@ $(document).ready(function() {
 			,success:function(data){
 				if(data.result == "success"){
 
-					location.href="/board/trade/main";
 				}
 				else{
 					alert("업로드에 실패했습니다");

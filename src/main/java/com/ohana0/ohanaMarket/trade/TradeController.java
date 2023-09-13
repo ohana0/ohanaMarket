@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ohana0.ohanaMarket.trade.dto.TradeDetail;
 import com.ohana0.ohanaMarket.trade.service.TradeService;
@@ -28,6 +29,15 @@ public class TradeController {
 	@GetMapping("/board/trade/new")
 	public String newTrade() {
 		return "/trade/newPost";
+	}
+	
+	@GetMapping("/board/trade")
+	public String postDetail(@RequestParam("id")int postId,Model model) {
+		TradeDetail trade = tradeService.getTradeById(postId);
+		
+		model.addAttribute("trade",trade);
+		
+		return "/trade/postDetail";
 	}
 	
 }
