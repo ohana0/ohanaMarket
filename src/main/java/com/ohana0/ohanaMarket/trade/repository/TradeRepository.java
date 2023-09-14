@@ -15,6 +15,8 @@ public interface TradeRepository {
 	public int insertTradeGetId(Trade trade);
 
 	public Trade selectTradeById(@Param("postId")int postId);
+
+	public int deletePost(@Param("postId")int postId);
 	
 
 }

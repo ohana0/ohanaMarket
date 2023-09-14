@@ -17,8 +17,7 @@ import com.ohana0.ohanaMarket.image.service.ImageService;
 public class ImageRestController {
 	@Autowired
 	private ImageService imageService;
-	
-	
+		
 	@PostMapping("/uploadSummernoteImageFile")
 	public Map<String,String> uploadImage(@RequestParam("file") MultipartFile file
 			,@RequestParam(value="postId", required=false) Integer postId

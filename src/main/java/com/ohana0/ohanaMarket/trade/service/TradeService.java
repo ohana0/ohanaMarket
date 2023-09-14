@@ -89,5 +89,11 @@ public class TradeService {
 		return tradeDetail;
 	}
 
+	public int deletePost(int postId) {
+		int count = tradeRepository.deletePost(postId);
+		imageService.deleteImageByPostIdType(postId,"trade");
+		return count;
+	}
+
 
 }

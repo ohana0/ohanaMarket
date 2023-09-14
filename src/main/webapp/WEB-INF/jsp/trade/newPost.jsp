@@ -115,7 +115,7 @@ $(document).ready(function() {
 			,contentType: false              // 파일 업로드를 위한 필수 설정
 			,success:function(data){
 				if(data.result == "success"){
-
+					location.href="/board/trade/main";
 				}
 				else{
 					alert("업로드에 실패했습니다");

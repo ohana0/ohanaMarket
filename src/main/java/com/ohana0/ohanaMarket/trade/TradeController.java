@@ -37,6 +37,7 @@ public class TradeController {
 		TradeDetail trade = tradeService.getTradeById(postId);
 		
 		model.addAttribute("trade",trade);
+		model.addAttribute("imageList",trade.getImageUrlList());
 		
 		return "/trade/postDetail";
 	}

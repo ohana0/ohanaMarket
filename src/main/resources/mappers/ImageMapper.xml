@@ -22,4 +22,8 @@
 		FROM `image`
 		WHERE `postId`=#{postId} AND `type` = #{type}
 	</select>
+	<delete id="deleteImage" parameterType="map">
+		DELETE FROM `image`
+		WHERE `postId`=#{postId} AND `type` = #{type}
+	</delete>
 </mapper>

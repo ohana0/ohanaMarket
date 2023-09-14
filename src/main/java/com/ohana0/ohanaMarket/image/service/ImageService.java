@@ -36,5 +36,16 @@ public class ImageService {
 		return imageList;
 	}
 
+	public int deleteImageByPostIdType(int postId,String type) {//table에서의삭제와 파일자체의 삭제가 같이 이루어져야함.
+		List<Image> imageList = imageRepository.selectImage(postId, type);
+		int count = imageRepository.deleteImage(postId,type);
+		for(Image image:imageList) {
+			FileManager.deleteFile(image.getUrl());
+		}
+		
+		return count;
+		
+	}
+
 
 }

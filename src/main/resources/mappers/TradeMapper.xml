@@ -25,6 +25,9 @@
 		FROM `trade`
 		WHERE `id`=#{postId}
 	</select>
-	
+	<delete id="deletePost" parameterType="int">
+		DELETE FROM `trade`
+		WHERE `id`= #{postId}
+	</delete>
 
 </mapper>

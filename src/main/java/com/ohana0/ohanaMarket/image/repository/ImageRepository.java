@@ -16,5 +16,7 @@ public interface ImageRepository {
 
 	public List<Image> selectImage(@Param("postId")int postId, @Param("type")String type);
 
+	public int deleteImage(@Param("postId")int postId, @Param("type")String type);
+
 
 }

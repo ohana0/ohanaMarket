@@ -66,11 +66,12 @@ public class FileManager{
 		
 		
 		String fileDerectory = FILE_UPLOAD_PATH +imagePath.substring(7);		
+		int lastIndex = fileDerectory.lastIndexOf("/");
 		
 		File file = new File(fileDerectory);
-		
+		File folder = new File(fileDerectory.substring(0, lastIndex));
 		if(file.exists()) {
-			return file.delete();
+			return file.delete()&&folder.delete();
 		}
 		else {
 			return false;
