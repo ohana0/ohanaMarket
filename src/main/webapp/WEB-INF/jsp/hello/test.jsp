@@ -5,6 +5,12 @@
 <head>
     <meta charset="utf-8">
     <title>좌표로 주소를 얻어내기</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=597e8a0237aa981812cfe1237d7a949b&libraries=services"></script>
     <style>
 	    .map_wrap {position:relative;width:100%;height:350px;}
@@ -25,6 +31,7 @@
 </div>
 
 <script>
+	$(document).ready(function(){
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				    mapOption = {
 				        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -38,7 +45,7 @@
 				var geocoder = new kakao.maps.services.Geocoder();
 				
 				var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-				    infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+					infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 				
 				// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
 				searchAddrFromCoords(map.getCenter(), displayCenterInfo);
@@ -95,6 +102,7 @@
 				        }
 				    }    
 			}
+	})
 </script>
 </body>
 </html>

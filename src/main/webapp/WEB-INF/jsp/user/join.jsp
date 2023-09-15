@@ -12,6 +12,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=597e8a0237aa981812cfe1237d7a949b&libraries=services"></script>
+
+    <style>
+    .map_wrap {position:relative;width:100%}
+    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    </style>
 </head>
 <body>
 	<div id="wrap">
@@ -42,8 +50,11 @@
 					<div class="image-input-div input-div card d-flex">
 						<i class="bi bi-file-image p-2"><input type="file" class="input-box" id="imageInput"></i>
 					</div>
-					<div class="region-input-div input-div card d-flex">
-						<i class="bi bi-map p-2"><input type="text" class="input-box" id="regionInput" placeholder="지역"></i>
+					<div class="region-input-div input-div card d-flex justify-content-flex-start">
+						<i class="bi bi-map p-2">
+							<input type="text" class="d-none" id="regionInput" placeholder="지역">
+							<a id="regionInput" class="input-box" href="#"  data-toggle="modal" data-target="#regionMapInput">지역선택</a>
+						</i>
 					</div>
 					<div class="introduce-input-div card d-flex text-left input-div">
 						<i class="bi bi-blockquote-left p-2"></i>
@@ -61,13 +72,88 @@
 
 		</section>
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+<!-- Modal -->
+		<div class="modal fade" id="regionMapInput" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		  	<div class="modal-content m-0" style="width:405px;height:438px">
+		 		<div class="nav flex-column w-100">
+		 			<div id="map" style="width:400px;height:400px;"></div>
+
+				</div>
+				<button type="button" class="btn btn-block" id="closeModal">입력하기</button>
+			</div>
+		  </div>
+		</div>	
 
 	</div>
 
 </body>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+    level: 6 // 지도의 확대 레벨
+};  
 
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 지도에 확대 축소 컨트롤을 생성한다
+var zoomControl = new kakao.maps.ZoomControl();
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	map.relayout();
+	searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	        var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+	        detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+	        
+	        var content = '<div class="bAddr">' +
+	                        '<span class="title">법정동 주소정보</span>' + 
+	                        detailAddr + 
+	                    '</div>';
+	
+	        // 마커를 클릭한 위치에 표시합니다 
+	        marker.setPosition(mouseEvent.latLng);
+	        marker.setMap(map);
+	
+	        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+	        infowindow.setContent(content);
+	        infowindow.open(map, marker);
+
+	        
+	        var regionInput = document.getElementById("regionInput");
+	        regionInput.setAttribute("value",result[0].address.address_name);
+	        alert($("#regionInput").val());
+	    }   
+	});
+});
+
+
+function searchAddrFromCoords(coords, callback) {
+	// 좌표로 행정동 주소 정보를 요청합니다
+	geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+
+function searchDetailAddrFromCoords(coords, callback) {
+	// 좌표로 법정동 상세 주소 정보를 요청합니다
+	geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+</script>
 <script>
 $(document).ready(function(){
+	$("#closeModal").on("click",function(){
+		$("#regionMapInput").attr("aria-hidden","true");
+	})
+	
 	let idCheck = false;
 	let nicknameCheck = false;
 	let passwordCheck = false;
@@ -75,6 +161,9 @@ $(document).ready(function(){
 	let regionCheck = false;
 	
 	$("#submitBtn").on("click",function(){
+		if($("#regionInput").val() != ""){
+			regionCheck = true;
+		}
 		if(!idCheck){
 			alert("아이디를 확인하세요");
 			return;
@@ -139,28 +228,6 @@ $(document).ready(function(){
 		
 	})
 	
-//region 유효성검사: 빈칸만아니게
-	$("#regionInput").on("input",function(){
-		let region = $(this).val();
-		if(region == ""){
-			regionCheck = false;
-		}
-		else{
-			regionCheck = true;
-			
-		}
-		if(!regionCheck){
-			$(".region-input-div").addClass("border-red")
-		}
-		else{
-			$(".region-input-div").removeClass("border-red")
-		}
-		
-		
-		
-	})
-	
-	
 //phonenumber 유효성검사: 정규식 활용
 	$("#phoneInput").on("input",function(){
 		let phoneNumber = $(this).val();
@@ -206,6 +273,7 @@ $(document).ready(function(){
 				else{
 					nicknameCheck = true;
 					$(".nickname-input-div").removeClass("border-red");
+
 					return;
 				}
 				
