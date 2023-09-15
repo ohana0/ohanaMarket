@@ -63,9 +63,13 @@ public class UserRestController {
 			,@RequestParam("phoneNumber")String phoneNumber
 			,@RequestParam("introduce")String introduce
 			){
+
+		
 		
 		int count = userService.addUser(loginId,password,nickname,profileImage,region,phoneNumber,introduce);
-
+		
+		
+		
 		Map<String,String> resultMap = new HashMap<>();
 		if(count > 0) {
 			resultMap.put("result", "success");
