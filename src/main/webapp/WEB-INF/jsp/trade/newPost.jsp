@@ -13,10 +13,14 @@
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	
-	<script src="/static/summernote/summernote-lite.js"></script>
-	<script src="/static/summernote/lang/summernote-ko-KR.js"></script>
-	
-	<link rel="stylesheet" href="/static/summernote/summernote-lite.css">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=597e8a0237aa981812cfe1237d7a949b&libraries=services"></script>
+
+    <style>
+    .map_wrap {position:relative;width:100%}
+    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    </style>
 </head>
 <body>
 	<div id="wrap">
@@ -49,8 +53,8 @@
 								<label><input type="radio" name="type" value="direct">직거래</label>
 							</div>
 							<div class="trade-location-area m-2">
-								<div>여기는 지도입력이들어갈 자리임</div>
-								<input id="locationInput" type="text" placeholder="일단 대충 text입력으로놔둠" class="form-control">
+								<button type="button" class="btn btn-block"a id="regionInput" data-toggle="modal" data-target="#regionMapInput">지도펼치기</button>
+								<input id="locationInput" type="text" class="form-control" disabled>
 							</div>
 							<div class="image-input-area m-2">
 								<label>이미지 등록
@@ -69,7 +73,82 @@
 		</section>
 		
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+<!-- Modal -->
+		<div class="modal fade" id="regionMapInput" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		  	<div class="modal-content m-0" style="width:405px;height:438px">
+		 		<div class="nav flex-column w-100">
+		 			<div id="map" style="width:400px;height:400px;"></div>
+
+				</div>
+				<button type="button" class="btn btn-block" id="closeModal">입력하기</button>
+			</div>
+		  </div>
+		</div>			
 	</div>
+	
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+    level: 6 // 지도의 확대 레벨
+};  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 지도에 확대 축소 컨트롤을 생성한다
+var zoomControl = new kakao.maps.ZoomControl();
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	map.relayout();
+	searchAddrFromCoords(mouseEvent.latLng, function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	        var infoDiv = mouseEvent.latLng;
+		
+	        for(var i = 0; i < result.length; i++) {
+	            // 행정동의 region_type 값은 'H' 이므로
+	            if (result[i].region_type === 'H') {
+	                var addrInfo = result[i].address_name;
+	                break;
+	            }
+	        }
+
+	        var content = '<div class="bAddr">' +
+	                        addrInfo +
+	                    '</div>';
+	
+	        // 마커를 클릭한 위치에 표시합니다 
+	        marker.setPosition(mouseEvent.latLng);
+	        marker.setMap(map);
+	
+	        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+	        infowindow.setContent(content);
+	        infowindow.open(map, marker);
+					
+	        var regionInput = document.getElementById("locationInput");
+	        regionInput.setAttribute("value",addrInfo);
+	    }   	
+	});
+});
+
+function searchAddrFromCoords(coords, callback) {
+	// 좌표로 행정동 주소 정보를 요청합니다
+	geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+
+function searchDetailAddrFromCoords(coords, callback) {
+	// 좌표로 법정동 상세 주소 정보를 요청합니다
+	geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+</script>	
 <script>
 $(document).ready(function() {
 	$("#submitBtn").on("click",function(){

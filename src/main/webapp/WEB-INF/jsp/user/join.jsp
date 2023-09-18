@@ -110,16 +110,20 @@ infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대�
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	map.relayout();
-	searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
-
+	searchAddrFromCoords(mouseEvent.latLng, function(result, status) {
 	    if (status === kakao.maps.services.Status.OK) {
-       
-	    	var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-	        detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-	        
+	        var infoDiv = mouseEvent.latLng;
+		
+	        for(var i = 0; i < result.length; i++) {
+	            // 행정동의 region_type 값은 'H' 이므로
+	            if (result[i].region_type === 'H') {
+	                var addrInfo = result[i].address_name;
+	                break;
+	            }
+	        }
+
 	        var content = '<div class="bAddr">' +
-	                        '<span class="title">법정동 주소정보</span>' + 
-	                        detailAddr + 
+	                        addrInfo +
 	                    '</div>';
 	
 	        // 마커를 클릭한 위치에 표시합니다 
@@ -131,12 +135,10 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	        infowindow.open(map, marker);
 					
 	        var regionInput = document.getElementById("regionInput");
-	        regionInput.setAttribute("value",result[0].address.address_name);
-	        alert($("#regionInput").val());
-	    }   
+	        regionInput.setAttribute("value",addrInfo);
+	    }   	
 	});
 });
-
 
 function searchAddrFromCoords(coords, callback) {
 	// 좌표로 행정동 주소 정보를 요청합니다
@@ -152,7 +154,7 @@ function searchDetailAddrFromCoords(coords, callback) {
 <script>
 $(document).ready(function(){
 	$("#closeModal").on("click",function(){
-		$("#regionMapInput").attr("aria-hidden","true");
+		$("#regionMapInput").attr("aria-hidden",true);
 	})
 	
 	let idCheck = false;

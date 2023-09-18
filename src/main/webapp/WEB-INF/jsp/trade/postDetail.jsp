@@ -44,7 +44,20 @@
 				<div class="ml-5" style="width:500px">
 					<div class="content-area" style="height:400px">
 						<h1>${trade.title }</h1>
-						<div>${trade.content }</div>
+						<div>${trade.userId }</div>
+						<div style="height:240px">
+							<div>${trade.content }</div>
+<c:if test="${trade.userId eq loginId }">	
+							<div class="d-flex">
+								<label>판매등록<input type="radio" name="state" value="판매등록"></label>
+								<label>거래대기<input type="radio" name="state" value="거래대기"></label>
+								<label>거래완료<input type="radio" name="state" value="거래완료"></label>
+							</div>
+								<button id="updateStateBtn" type="button" class="btn btn-block">변경</button>
+</c:if>
+						</div>
+						<h5>${trade.price }원</h5>	
+						<div>거래희망장소: ${trade.tradeLocation }</div>
 					
 					</div>
 				
@@ -70,6 +83,29 @@
 <script>
 
 	$(document).ready(function(){
+		$("#updateStateBtn").on("click",function(){
+			let state = document.getElementsByName('state');
+			
+			$.ajax({
+				type:"post"
+				,url:"/board/trade/changestate"
+				,data:{"state":state
+					,"postId":${trade.id}}
+				,success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}
+					else{
+						alert("변경실패");
+					}
+				}
+				,error:function(){
+					alert("오류발생");
+				}
+				
+			})
+			
+		})
 		$('.slider-wrap').slick({
 			slidesToShow: 1,
 			slide: "div",

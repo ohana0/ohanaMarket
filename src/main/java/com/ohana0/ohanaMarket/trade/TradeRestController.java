@@ -68,7 +68,22 @@ public class TradeRestController {
 		}
 		return resultMap;
 		
-	}
+	}	
 	
+	@PostMapping("/board/trade/changestate")
+	public Map<String,String> changeState(@RequestParam("state")String state,@RequestParam("postId")int postId,HttpSession session) {
+		int count = tradeService.changeState(state,postId);
+		
+		
+		
+		Map<String,String> resultMap = new HashMap<>();
+		if(count > 0) {
+			resultMap.put("result", "success");
+		}
+		else {
+			resultMap.put("result", "false");
+		}
+		return resultMap;
+	}
 
 }

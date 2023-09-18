@@ -17,6 +17,8 @@ public interface TradeRepository {
 	public Trade selectTradeById(@Param("postId")int postId);
 
 	public int deletePost(@Param("postId")int postId);
+
+	public int updateState(@Param("state")String state, @Param("postId")int postId);
 	
 
 }

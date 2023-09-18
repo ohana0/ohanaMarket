@@ -95,5 +95,10 @@ public class TradeService {
 		return count;
 	}
 
+	public int changeState(String state, int postId) {
+		int count = tradeRepository.updateState(state,postId);
+		return count;
+	}
+
 
 }

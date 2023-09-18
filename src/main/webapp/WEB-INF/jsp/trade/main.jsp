@@ -39,7 +39,6 @@
 								</div>
 				</a>
 </c:forEach>
-<button type="button" class="btn btn-secondary" id="next10trade">다음 10개 보기</button>
 			</div>
 			
 		

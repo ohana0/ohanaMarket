@@ -29,5 +29,11 @@
 		DELETE FROM `trade`
 		WHERE `id`= #{postId}
 	</delete>
+	<update id="updateState" parameterType="map">
+		UPDATE `trade`
+		SET `state`=#{state} 
+		WHERE `postId`=#{postId}
+	
+	</update>
 
 </mapper>
