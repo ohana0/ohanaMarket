@@ -1,6 +1,7 @@
 package com.ohana0.ohanaMarket.trade.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,11 @@ public class TradeService {
 		Trade trade = tradeRepository.selectTradeById(postId);
 		List<String> imageUrlList = new ArrayList<>();
 		List<Image> imageList = imageService.getImageList(postId,"trade");
+		
+		Date date = new Date();
+		long millisecond = date.getTime()- trade.getCreatedAt().getTime();
+		
+		int day =  (int) Math.floor(millisecond/(1000*60*60*24));
 		for(Image image:imageList) {
 			imageUrlList.add(image.getUrl());
 		}
@@ -77,6 +83,7 @@ public class TradeService {
 				.id(trade.getId())
 				.userId(userService.getLoginIdById(trade.getUserId()))
 				.title(trade.getTitle())
+				.dateAgo(day)
 				.content(trade.getContent())
 				.price(trade.getPrice())
 				.type(trade.getType())
@@ -98,6 +105,32 @@ public class TradeService {
 	public int changeState(String state, int postId) {
 		int count = tradeRepository.updateState(state,postId);
 		return count;
+	}
+
+	public List<TradeDetail> getTradeListByKeyWord(String keyWord) {
+		List<Trade> tradeOriginalList  = tradeRepository.selectTradeByKeyWord(keyWord);
+		List<TradeDetail> tradeList = new ArrayList<>();
+		
+		for(Trade trade:tradeOriginalList) {
+			String thumbnail = imageService.getThumbnail(trade.getId(),"trade");
+			String userId = userService.getLoginIdById(trade.getUserId()); 
+			
+			TradeDetail tradeDetail = TradeDetail.builder()
+					.id(trade.getId())
+					.content(trade.getContent())
+					.price(trade.getPrice())
+					.state(trade.getState())
+					.tradeLocation(trade.getTradeLocation())
+					.title(trade.getTitle())
+					.type(trade.getType())
+					.userId(userId)
+					.thumbnailImagePath(thumbnail)
+					.build();
+			tradeList.add(tradeDetail);
+		}
+		
+		
+		return tradeList;
 	}
 
 

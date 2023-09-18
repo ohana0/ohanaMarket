@@ -22,6 +22,8 @@ public class TradeDetail {
 	private Date createdAt;
 	private Date updatedAt;
 	
+	private long dateAgo;
+	
 	private List<String> imageUrlList;
 	private String thumbnailImagePath;
 

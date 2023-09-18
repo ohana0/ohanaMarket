@@ -53,7 +53,7 @@
 								<label><input type="radio" name="type" value="direct">직거래</label>
 							</div>
 							<div class="trade-location-area m-2">
-								<button type="button" class="btn btn-block"a id="regionInput" data-toggle="modal" data-target="#regionMapInput">지도펼치기</button>
+								<button type="button" class="btn btn-block" id="regionInput" data-toggle="modal" data-target="#regionMapInput">지도펼치기</button>
 								<input id="locationInput" type="text" class="form-control" disabled>
 							</div>
 							<div class="image-input-area m-2">

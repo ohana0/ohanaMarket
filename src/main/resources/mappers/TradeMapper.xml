@@ -9,7 +9,7 @@
 		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
 		FROM `trade`
 		ORDER BY `id` DESC
-		LIMIT 10
+		
 	</select>
 	
 	<insert id="insertTradeGetId" parameterType="com.ohana0.ohanaMarket.trade.domain.Trade"
@@ -32,8 +32,13 @@
 	<update id="updateState" parameterType="map">
 		UPDATE `trade`
 		SET `state`=#{state} 
-		WHERE `postId`=#{postId}
+		WHERE `id`=#{id}
 	
 	</update>
+	<select id="selectTradeByKeyWord" parameterType="String" resultType="com.ohana0.ohanaMarket.trade.domain.Trade">
+		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
+		FROM `trade`
+		WHERE `title` LIKE '%${keyWord}%'
+	</select>
 
 </mapper>

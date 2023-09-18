@@ -41,5 +41,11 @@ public class TradeController {
 		
 		return "/trade/postDetail";
 	}
+	@GetMapping("/board/trade/search")
+	public String searchPost(@RequestParam("keyWord") String keyWord,Model model) {
+		List<TradeDetail> tradeList = tradeService.getTradeListByKeyWord(keyWord);
+		model.addAttribute("tradeList",tradeList);
+		return"/trade/search";
+	}
 
 }

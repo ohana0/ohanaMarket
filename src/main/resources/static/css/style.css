@@ -5,7 +5,7 @@
 	border-style:solid;
 }
 #contentListArea{
-	overflow:auto;
+	height:600px;
 }
 #logoStyle{
 	font-size: 65px;
@@ -16,8 +16,13 @@ header{
 	margin:10px;
 
 }
+.border-black{
+	border-color:black;
+	border-style:solid;
+}
 
 .border-red{
+	
 	border-color:red;
 }
 
