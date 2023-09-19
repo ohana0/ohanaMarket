@@ -43,6 +43,13 @@ public class PostController {
 		return"/post/updatePost";
 		
 	}
+	@GetMapping("/board/post/search")
+	public String searchPost(@RequestParam("keyWord")String keyWord,Model model) {
+		List<PostDetail> postList = postService.getPostDetailByKeyWord(keyWord);
+		model.addAttribute("postList", postList);
+		return "/post/main";
+	}
+	
 	
 	
 	

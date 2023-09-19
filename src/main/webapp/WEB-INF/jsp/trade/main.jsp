@@ -23,11 +23,11 @@
 <c:forEach var="trade" items="${tradeList }" >
 <c:if test="${trade.state eq  '거래완료'}">						
 <a href="/board/trade/?id=${trade.id }" class="text-light">
-								<div class="card post-card m-2" style="border-color:gray">
+								<div class="card post-card" style="border-color:gray">
 </c:if>
 <c:if test="${trade.state ne '거래완료' }">
 <a href="/board/trade/?id=${trade.id }" class="text-secondary">		
-								<div class="card post-card border-black completed-trade-card m-2" data-trade-id="${trade.id }">
+								<div class="card post-card border-black" data-trade-id="${trade.id }">
 </c:if>
 									<div class="d-flex justify-content-between align-items-center m-2">
 										<div>

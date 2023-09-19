@@ -20,4 +20,8 @@ public interface PostRepository {
 
 	public int updatePost(@Param("postId")int postId, @Param("title")String title, @Param("content")String content);
 
+	public List<Post> selectPostByKeyWord(@Param("keyWord")String keyWord);
+
+	public List<Post> selectPostByUserId(@Param("userId")int userId);
+
 }

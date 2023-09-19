@@ -71,4 +71,9 @@ public class UserService {
 		return loginId;
 	}
 
+	public User getUserById(String userId) {
+		User user = userRepository.getUserByLoginId(userId);
+		return user;
+	}
+
 }

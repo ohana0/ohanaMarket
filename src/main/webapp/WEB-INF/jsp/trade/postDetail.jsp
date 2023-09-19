@@ -56,8 +56,10 @@
 								<button id="updateStateBtn" type="button" class="btn btn-block">변경</button>
 </c:if>
 						</div>
-						<h5>희망가격: ${trade.price }원</h5>	
+						<h5>희망가격: ${trade.price }원</h5>
+<c:if test="${not empty trade.tradeLocation }">
 						<div>거래희망장소: ${trade.tradeLocation }</div>
+</c:if>
 						<div>현재상태: ${trade.state }</div>
 					
 					</div>

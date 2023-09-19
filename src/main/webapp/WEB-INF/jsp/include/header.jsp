@@ -49,18 +49,18 @@
 					 			<button type="submit" class="btn btn-block">검색</button>
 				 			</form>
 				 			
-				 			<form class="post-search d-none" method="post" id="searchByKeyWordPost">
-				 				<input type="text" class="form-control" placeHolder="검색어를 정확하게 입력하세요" name="searchWordPost">
+				 			<form class="post-search d-none" method="get" id="searchByKeyWordPost" action="/board/post/search">
+				 				<input type="text" class="form-control" placeHolder="검색어를 정확하게 입력하세요" name="keyWord">
 					 			<button type="submit" class="btn btn-block">검색</button>
 				 			</form>
 				 			
-					 		<form class="user-search d-none" id="searchByUser" method="get" action="#">
+					 		<form class="user-search d-none" id="searchByUser" method="get" action="/user/profile">
 					 			<input type="text" class="form-control" placeHolder="아이디를 정확하게 입력하세요" name="userId">
 					 			<button type="submit" class="btn btn-block">검색</button>
 					 		</form>
 					 		
-				 			<form class="region-search d-none" method="post" id="searchByRegion">
-				 				<input type="text" class="form-control" placeHolder="지역정보를 정확하게 입력하세요" name="searchRegion">
+				 			<form class="region-search d-none" method="get" id="searchByRegion" action="/board/trade/search">
+				 				<input type="text" class="form-control" placeHolder="지역정보를 입력하세요(예시:강남구)" name="searchRegion">
 					 			<button type="submit" class="btn btn-block">검색</button>
 				 			</form>
 						</div>

@@ -39,6 +39,20 @@
 		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
 		FROM `trade`
 		WHERE `title` LIKE '%${keyWord}%'
+		ORDER BY `id` DESC	
+	</select>
+	<select id="selectTradeByUserId" parameterType="int" resultType="com.ohana0.ohanaMarket.trade.domain.Trade">
+		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
+		FROM `trade`
+		WHERE `userId`=#{userId}
+		ORDER BY `id` DESC
+	
+	</select>
+	<select id="selectTradeByRegion" parameterType="String" resultType="com.ohana0.ohanaMarket.trade.domain.Trade">
+		SELECT `id`,`userId`,`title`,`content`,`price`,`type`,`tradeLocation`,`state`,`createdAt`,`updatedAt`
+		FROM `trade`
+		WHERE `tradeLocation` LIKE '%${region}%'
+		ORDER BY `id` DESC		
 	</select>
 
 </mapper>

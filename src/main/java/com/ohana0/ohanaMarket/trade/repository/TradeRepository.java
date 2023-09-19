@@ -22,6 +22,11 @@ public interface TradeRepository {
 	public int updateState(@Param("state")String state, @Param("id")int postId);
 
 	public List<Trade> selectTradeByKeyWord(@Param("keyWord")String keyWord);
+
+	public List<Trade> selectTradeByUserId(@Param("userId")int userId);
+
+	public List<Trade> selectTradeByRegion(@Param("region")String region);
+	
 	
 
 }

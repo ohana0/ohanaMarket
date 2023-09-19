@@ -18,15 +18,6 @@ public class TradeController {
 	@Autowired
 	private TradeService tradeService;
 	
-	@GetMapping("/board/trade/main")
-	public String TradeMain(Model model) {
-		List<TradeDetail> tradeList = tradeService.getTradeList();
-		
-		model.addAttribute("tradeList", tradeList);
-		
-		
-		return "/trade/main";
-	}
 	@GetMapping("/board/trade/new")
 	public String newTrade() {
 		return "/trade/newPost";
@@ -42,10 +33,30 @@ public class TradeController {
 		return "/trade/postDetail";
 	}
 	@GetMapping("/board/trade/search")
-	public String searchPost(@RequestParam("keyWord") String keyWord,Model model) {
-		List<TradeDetail> tradeList = tradeService.getTradeListByKeyWord(keyWord);
-		model.addAttribute("tradeList",tradeList);
-		return"/trade/search";
+	public String searchPost(
+			@RequestParam(value="keyWord",required=false) String keyWord
+			,@RequestParam(value="searchRegion" ,required=false) String region, Model model) {
+		if(keyWord !=null) {
+			List<TradeDetail> tradeList = tradeService.getTradeListByKeyWord(keyWord);
+			model.addAttribute("tradeList",tradeList);
+			
+		}
+		else if(region !=null) {
+			List<TradeDetail> tradeList = tradeService.getTradeListByRegion(region);
+			model.addAttribute("tradeList",tradeList);
+			
+		}
+		return"/trade/main";
+	}
+
+	@GetMapping("/board/trade/main")
+	public String TradeMain(Model model) {
+		List<TradeDetail> tradeList = tradeService.getTradeList();
+		
+		model.addAttribute("tradeList", tradeList);
+		
+		
+		return "/trade/main";
 	}
 
 }

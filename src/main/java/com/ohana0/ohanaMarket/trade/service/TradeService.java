@@ -133,5 +133,54 @@ public class TradeService {
 		return tradeList;
 	}
 
+	public List<TradeDetail> getTradeDetailByUserId(int id) {
+		List<Trade> tradeOriginalList  = tradeRepository.selectTradeByUserId(id);
+		List<TradeDetail> tradeList = new ArrayList<>();
+		
+		for(Trade trade:tradeOriginalList) {
+			String thumbnail = imageService.getThumbnail(trade.getId(),"trade");
+			String userId = userService.getLoginIdById(trade.getUserId()); 
+			
+			TradeDetail tradeDetail = TradeDetail.builder()
+					.id(trade.getId())
+					.content(trade.getContent())
+					.price(trade.getPrice())
+					.state(trade.getState())
+					.tradeLocation(trade.getTradeLocation())
+					.title(trade.getTitle())
+					.type(trade.getType())
+					.userId(userId)
+					.thumbnailImagePath(thumbnail)
+					.build();
+			tradeList.add(tradeDetail);
+		}
+	
+	
+		return tradeList;
+	}
 
+	public List<TradeDetail> getTradeListByRegion(String region) {
+		List<Trade> tradeOriginalList  = tradeRepository.selectTradeByRegion(region);
+		List<TradeDetail> tradeList = new ArrayList<>();
+		
+		for(Trade trade:tradeOriginalList) {
+			String thumbnail = imageService.getThumbnail(trade.getId(),"trade");
+			String userId = userService.getLoginIdById(trade.getUserId()); 
+			
+			TradeDetail tradeDetail = TradeDetail.builder()
+					.id(trade.getId())
+					.content(trade.getContent())
+					.price(trade.getPrice())
+					.state(trade.getState())
+					.tradeLocation(trade.getTradeLocation())
+					.title(trade.getTitle())
+					.type(trade.getType())
+					.userId(userId)
+					.thumbnailImagePath(thumbnail)
+					.build();
+			tradeList.add(tradeDetail);
+		}
+		return tradeList;
+
+	}
 }

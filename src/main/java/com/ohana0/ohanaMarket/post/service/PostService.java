@@ -106,4 +106,67 @@ public class PostService {
 		return count;
 	}
 
+	public List<PostDetail> getPostDetailByKeyWord(String keyWord) {
+		List<Post> postOriginalList = postRepository.selectPostByKeyWord(keyWord);
+		List<PostDetail> postList = new ArrayList<>();
+		for(Post post:postOriginalList) {
+			Date date = new Date();
+			long millisecond = date.getTime()- post.getCreatedAt().getTime();
+			int day =  (int) Math.floor(millisecond/(1000*60*60*24));
+			PostDetail postDetail =PostDetail.builder()
+					.id(post.getId())
+					.title(post.getTitle())
+					.content(post.getContent())
+					.userId(userService.getLoginIdById(post.getUserId()))
+					.createdAt(post.getCreatedAt())
+					.dateAgo(day)
+					.commentList(commentService.getCommentByPostId(post.getId()))
+					.commentCount(commentService.countCommentByPostId(post.getId()))
+					.build();
+			postList.add(postDetail);
+		}
+		
+		return postList;
+	}
+
+	public List<PostDetail> getPostDetailByUserId(int id) {
+		List<Post> postOriginalList = postRepository.selectPostByUserId(id);
+		List<PostDetail> postList = new ArrayList<>();
+		for(Post post:postOriginalList) {
+			String content = post.getContent();
+			String thumbnail;
+			if(content.contains("<img")) {
+				String thumbnailTag = "";
+				int startIndex = content.indexOf("<img");
+				int endIndex = startIndex;
+
+				for(int i = startIndex; i< content.length(); i++) {
+					if(content.charAt(i) == 076) {
+						endIndex = i + 1;
+						break;
+					}
+				}
+				thumbnailTag = content.substring(startIndex,endIndex);
+				thumbnail = thumbnailTag.substring(0, 4)+" class=\"summernote-image\" style=\"width:80px;height:60px\"" + thumbnailTag.substring(5);
+			}
+			else{
+				thumbnail = "";
+			}
+
+			PostDetail postDetail =PostDetail.builder()
+					.id(post.getId())
+					.title(post.getTitle())
+					.content(post.getContent())
+					.userId(userService.getLoginIdById(post.getUserId()))
+					.createdAt(post.getCreatedAt())
+					.thumbnail(thumbnail)
+					.commentList(commentService.getCommentByPostId(post.getId()))
+					.commentCount(commentService.countCommentByPostId(post.getId()))
+					.build();
+			postList.add(postDetail);
+		}
+		
+		return postList;
+	}
+
 }

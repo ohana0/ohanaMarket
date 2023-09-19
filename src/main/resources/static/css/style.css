@@ -52,6 +52,10 @@ footer{
 	font-weight:bold;
 	
 }
+.profile-post-card{
+	width:480px;
+	height:100px;
+}
 .post-card{
 	width:1150px;
 	height:100px;
