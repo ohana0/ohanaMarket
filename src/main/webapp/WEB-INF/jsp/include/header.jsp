@@ -4,18 +4,22 @@
 
 		<header>
 			<div class="d-flex align-items-center justify-content-between">
-				<div class="d-flex">
+				<a class="d-flex" href="/board/post/main">
 					<img src="/static/image/logoImage.png" height="75px" class="pl-2">
-					<div id="logoStyle" class="pl-1">OhanaMarket</div>
-				</div>
+					<div id="logoStyle" class="pl-1 text-dark">OhanaMarket</div>
+				</a>
 <c:if test="${not empty loginId }">
 <div>
+	<a id="chatImage" href="/chat/main">
+		<img alt="chatIcon" src="/static/image/chatImage.png" style="width:80px;height:80px">
+	</a>
 	<a id="searchImage" href="#"  data-toggle="modal" data-target="#searchBox">
 		<img alt="searchIcon" src="/static/image/searchImage.png" style="width:80px;height:80px;border-radius:70%">
 	</a>
 	<a id="userProfileImage" href="#"  data-toggle="modal" data-target="#userNav">
 		<img alt="userImage" src="${profileImagePath }" style="width:80px;height:80px;border-radius:70%">
 	</a>
+	
 				
 
 	

@@ -19,11 +19,11 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex">
-			<div id="chatListBox">
-			리스트가 출력될곳
+			<div id="chatListBox" class="col-6">
+
 			</div>
-			<div id="chatBox">
-			상세채팅이 출력될곳
+			<div id="chatBox" class="col-6">
+			
 			</div>
 		
 		

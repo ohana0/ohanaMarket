@@ -55,6 +55,7 @@
 							</div>
 								<button id="updateStateBtn" type="button" class="btn btn-block">변경</button>
 </c:if>
+
 						</div>
 						<h5>희망가격: ${trade.price }원</h5>
 <c:if test="${not empty trade.tradeLocation }">
@@ -73,6 +74,9 @@
 						</div>
 </c:if>
 						<div>
+							<c:if test="${trade.userId ne loginId}">
+								<button type="button" class="btn btn-danger" id="newChatBtn">채팅시작하기</button>
+							</c:if>
 							<a href="/board/trade/main"><button type="button" class="btn btn-primary" >목록으로</button></a>
 						</div>		
 					</div>
@@ -86,6 +90,29 @@
 <script>
 
 	$(document).ready(function(){
+		$("#newChatBtn").on("click",function(){
+			alert();
+			let hostId = ${id};
+			let guestId = "${trade.userId}";
+			$.ajax({
+				type:"post"
+				,url:"/chat/new"
+				,data:{"hostId":hostId,"guestId":guestId}
+				,success:function(data){
+					if(data.result=="success"){
+						location.href="/chat/main"
+					}
+					else{
+						alert("채팅생성에 실패하였습니다");
+					}
+					
+				}
+				,error:function(data){
+					alert("오류발생");
+				}
+			})
+		})
+		
 		$("#updateStateBtn").on("click",function(){
 			let state = $('input[name="state"]:checked').val();
 			let postId = ${trade.id};

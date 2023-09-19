@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ohana0.ohanaMarket.chat.repository.ChatRepository">
+	<insert id="insertChat" parameterType="map">
+		INSERT INTO `chat`
+		(`hostId`,`guestId`)
+		VALUE
+		(#{hostId},#{guestId})
+	</insert>
+	<update id="insertMessage" parameterType="int">
+		UPDATE `chat`
+		SET `updatedAt`=now()
+		WHERE `id` = #{id}
+	</update>
+	<select id="selectChatByUserId" parameterType="int" resultType="com.ohana0.ohanaMarket.chat.domain.Chat">
+		SELECT `id`,`hostId`,`guestId`,`tradeId`,`createdAt`,`updatedAt`
+		FROM `chat`
+		WHERE `hostId`=#{userId} OR `guestId`=#{userId}
+		
+	
+	</select>
+
+
+</mapper>
