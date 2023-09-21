@@ -19,7 +19,7 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex justify-content-center">
-			<div id="contentListArea">
+			<div id="contentListArea" style="overflow:auto">
 <c:forEach var="trade" items="${tradeList }" >
 <c:if test="${trade.state eq  '거래완료'}">						
 <a href="/board/trade/?id=${trade.id }" class="text-light">

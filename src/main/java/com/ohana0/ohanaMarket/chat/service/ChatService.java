@@ -1,12 +1,14 @@
 package com.ohana0.ohanaMarket.chat.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ohana0.ohanaMarket.chat.domain.Chat;
+import com.ohana0.ohanaMarket.chat.domain.Message;
 import com.ohana0.ohanaMarket.chat.dto.ChatDetail;
 import com.ohana0.ohanaMarket.chat.repository.ChatRepository;
 import com.ohana0.ohanaMarket.chat.repository.MessageRepository;
@@ -21,8 +23,8 @@ public class ChatService {
 	@Autowired
 	private UserService userService;
 	
-	public int addChat(int hostId, int guestId) {
-		int count =  chatRepository.insertChat(hostId,guestId);
+	public int addChat(Chat chat) {
+		int count = chatRepository.insertChat(chat);
 		return count;
 	}
 
@@ -36,12 +38,24 @@ public class ChatService {
 		List<Chat> originalChatList = chatRepository.selectChatByUserId(userId);
 		List<ChatDetail> chatList = new ArrayList<>();
 		for(Chat chat:originalChatList) {
+			int id = chat.getId();
+			Date date = new Date();
+			long millisecond = date.getTime()- chat.getUpdatedAt().getTime();
+			int day =  (int) Math.floor(millisecond/(1000*60*60*24));
+			
+			List<Message> messageList = messageRepository.selectMessageByChatId(chat.getId());
+			String lastMessage = "";
+			if(messageList.size() !=0) {
+				lastMessage = messageRepository.getLastMessage(id);
+			}
+			
 			ChatDetail chatDetail = ChatDetail.builder()
 					.id(chat.getId())
 					.host(userService.getUserById(chat.getHostId()))
 					.guest(userService.getUserById(chat.getGuestId()))
-					.updatedAt(chat.getUpdatedAt())
-					.messageList(messageRepository.selectMessageByUserId(userId))
+					.dateAgo(day)
+					.messageList(messageList)
+					.lastMessage(lastMessage)
 					.build();
 			chatList.add(chatDetail);
 			
@@ -52,5 +66,28 @@ public class ChatService {
 		
 		return chatList;
 	}
+
+	public ChatDetail getChat(int id) {
+		Chat chat = chatRepository.selectChatById(id);
+		Date date = new Date();
+		long millisecond = date.getTime()- chat.getUpdatedAt().getTime();
+		List<Message> messageList = messageRepository.selectMessageByChatId(chat.getId());
+		String lastMessage = "";
+		if(messageList.size() !=0) {
+			lastMessage = messageRepository.getLastMessage(id);
+		}
+		int day =  (int) Math.floor(millisecond/(1000*60*60*24));
+		
+		ChatDetail chatDetail = ChatDetail.builder()
+				.id(chat.getId())
+				.host(userService.getUserById(chat.getHostId()))
+				.guest(userService.getUserById(chat.getGuestId()))
+				.dateAgo(day)
+				.messageList(messageList)
+				.lastMessage(lastMessage)
+				.build();
+		return chatDetail;
+	}
+
 
 }

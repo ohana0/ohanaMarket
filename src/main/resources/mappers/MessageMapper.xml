@@ -10,4 +10,16 @@
 		VALUE
 		(#{chatId},#{userId},#{content})
 	</insert>
+	<select id="selectMessageByChatId" parameterType="int">
+		SELECT `id`,`chatId`,`userId`,`content`,`createdAt`
+		FROM `message`
+		WHERE `chatId`=#{chatId}
+	</select>
+	<select id="getLastMessage" parameterType="int" resultType="string">
+		SELECT `content`
+		FROM `message`
+		WHERE `chatId` = #{chatId}
+		ORDER BY `id` DESC
+		LIMIT 1
+	</select>
 </mapper>

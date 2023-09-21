@@ -10,10 +10,14 @@ import com.ohana0.ohanaMarket.chat.domain.Chat;
 @Repository
 public interface ChatRepository {
 
-	public int insertChat(@Param("hostId")int hostId, @Param("guestId")int guestId);
+	public int insertChat(Chat chat);
 
 	public int insertMessage(@Param("id")int chatId);
 
 	public List<Chat> selectChatByUserId(@Param("userId")int userId);
+
+	public Chat selectChatById(@Param("id")int id);
+	
+
 
 }

@@ -19,21 +19,76 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex">
-			<div id="chatListBox" class="col-6">
-
+			<div id="chatListBox" class="col-6" style="border:solid;height:500px">
+<c:forEach var="chat" items="${chatList }">
+	<a class="card" href="/chat/main/?id=${chat.id }">
+		<div>
+		<div>${chat.host.loginId},${chat.guest.loginId }</div>
+		<img src="${chat.host.profileImagePath }" width="60px" height="60px">
+		</div>
+		<div>${chat.lastMessage }</div>
+		<div>${chat.updatedAt }</div>	
+	</a>
+</c:forEach>			
 			</div>
-			<div id="chatBox" class="col-6">
-			
+			<div id="chatBox" class="col-6" style="border:solid;height:500px">
+				<div style="height:440px">
+<c:forEach var="message" items="${thisChat.messageList }">
+	<c:if test="${message.userId ne id }">
+					<div class="text-left">${message.content }</div>	
+	</c:if>
+	<c:if test="${message.userId eq id }">
+					<div class="text-right">${message.content }</div>
+	</c:if>
+</c:forEach>
+				</div>
+				<label class="d-flex">
+					<input type="text" class="form-control" id="messageInput">
+					<button class="btn btn-info" id="sendBtn">보내기</button>
+					<h3><i class="bi bi-arrow-clockwise" id="reloadBtn"></i></h3>
+				</label>
 			</div>
 		
 		
 		
 		</section>
-		
+
 
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 <script>
 	$(document).ready(function(){
+		$("#sendBtn").on("click",function(){
+			let content = $("#messageInput").val();
+			let chatId=${thisChat.id};
+			$.ajax({
+				type:"post"
+				,url:"/chat/sendMessage"
+				,data:{"chatId":chatId,"content":content}
+				,success:function(data){
+					if(data.result =="success"){
+						location.reload();
+					}
+					else{
+						alert("메세지 전송에 실패하였습니다");
+						return;
+					}
+				}
+				,error:function(){
+					alert("오류발생");
+					return;
+				}
+				
+				
+				
+			})
+			
+		})
+		$("#reloadBtn").on("click",function(){
+			location.reload();
+			
+		})
+
+		
 		
 		
 	})

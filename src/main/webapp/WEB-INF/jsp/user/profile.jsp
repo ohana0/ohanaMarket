@@ -34,6 +34,11 @@
 					
 				
 				</div>
+<c:if test="${id ne user.id }">
+				<div>
+					<button class="btn btn-info" type="button" id="hostChat">채팅걸기</button>
+				</div>
+</c:if>
 			</div>
 			
 		<hr>
@@ -89,7 +94,32 @@
 		
 		</section>
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
-
+<script>
+	$(document).ready(function(){
+		$("#hostChat").on("click",function(){
+			let guestId=${user.id};
+			$.ajax({
+				type:"post"
+				,url:"/chat/new"
+				,data:{"guestId":guestId}
+				,success:function(data){
+					if(data.result =="success"){
+						location.href="/chat/main?id="+data.chatId;
+					}
+					else{
+						alert("채팅생성실패");	
+					}					
+				}
+				,error:function(){
+					alert("에러발생");
+				}
+				
+			})
+			
+		})
+		
+	})
+</script>
 	</div>
 
 

@@ -20,6 +20,8 @@ public class ChatDetail {
 	private List<Message> messageList;
 	private User host;
 	private User guest;
+	private String lastMessage;
+	private int dateAgo;
 	
 	
 }
