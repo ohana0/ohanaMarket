@@ -70,7 +70,7 @@
 <c:if test="${trade.userId eq loginId }">			
 						<div>
 							<button type="button" class="btn btn-danger" id="deleteBtn">삭제하기</button>
-							<button type="button" class="btn btn-secondary" id="updateBtn">수정하기</button>
+							<button type="button" class="btn btn-secondary" id="updateBtn"><a class="text-light" href="/board/trade/update?id=${trade.id }">수정하기</a></button>
 						</div>
 </c:if>
 						<div>
@@ -97,10 +97,10 @@
 			$.ajax({
 				type:"post"
 				,url:"/chat/new"
-				,data:{"hostId":hostId,"guestId":guestId}
+				,data:{"guestLoginId":guestId}
 				,success:function(data){
 					if(data.result=="success"){
-						location.href="/chat/main"
+						location.href="/chat/main?id="+data.chatId;
 					}
 					else{
 						alert("채팅생성에 실패하였습니다");

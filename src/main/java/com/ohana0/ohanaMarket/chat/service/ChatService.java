@@ -12,6 +12,7 @@ import com.ohana0.ohanaMarket.chat.domain.Message;
 import com.ohana0.ohanaMarket.chat.dto.ChatDetail;
 import com.ohana0.ohanaMarket.chat.repository.ChatRepository;
 import com.ohana0.ohanaMarket.chat.repository.MessageRepository;
+import com.ohana0.ohanaMarket.user.domain.User;
 import com.ohana0.ohanaMarket.user.service.UserService;
 
 @Service
@@ -48,11 +49,19 @@ public class ChatService {
 			if(messageList.size() !=0) {
 				lastMessage = messageRepository.getLastMessage(id);
 			}
+			User yourProfile = new User();
+			if(userId == chat.getHostId()) {			
+				yourProfile = userService.getUserById(chat.getGuestId());
+			}
+			else {
+				yourProfile = userService.getUserById(chat.getHostId());
+			}
+			
 			
 			ChatDetail chatDetail = ChatDetail.builder()
 					.id(chat.getId())
-					.host(userService.getUserById(chat.getHostId()))
-					.guest(userService.getUserById(chat.getGuestId()))
+					.myProfile(userService.getUserById(userId))
+					.yourProfile(yourProfile)
 					.dateAgo(day)
 					.messageList(messageList)
 					.lastMessage(lastMessage)
@@ -67,7 +76,7 @@ public class ChatService {
 		return chatList;
 	}
 
-	public ChatDetail getChat(int id) {
+	public ChatDetail getChat(int id,int userId) {
 		Chat chat = chatRepository.selectChatById(id);
 		Date date = new Date();
 		long millisecond = date.getTime()- chat.getUpdatedAt().getTime();
@@ -78,10 +87,18 @@ public class ChatService {
 		}
 		int day =  (int) Math.floor(millisecond/(1000*60*60*24));
 		
+		User yourProfile = new User();
+		if(userId == chat.getHostId()) {			
+			yourProfile = userService.getUserById(chat.getGuestId());
+		}
+		else {
+			yourProfile = userService.getUserById(chat.getHostId());
+		}
+		
 		ChatDetail chatDetail = ChatDetail.builder()
 				.id(chat.getId())
-				.host(userService.getUserById(chat.getHostId()))
-				.guest(userService.getUserById(chat.getGuestId()))
+				.myProfile(userService.getUserById(userId))
+				.yourProfile(yourProfile)
 				.dateAgo(day)
 				.messageList(messageList)
 				.lastMessage(lastMessage)

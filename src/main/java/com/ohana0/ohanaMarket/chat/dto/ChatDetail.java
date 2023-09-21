@@ -18,10 +18,9 @@ public class ChatDetail {
 	private Date updatedAt;
 	
 	private List<Message> messageList;
-	private User host;
-	private User guest;
+	private User myProfile;
+	private User yourProfile;
 	private String lastMessage;
 	private int dateAgo;
-	
-	
+
 }

@@ -183,4 +183,22 @@ public class TradeService {
 		return tradeList;
 
 	}
+
+	public int updateTradeByEntitiy(Trade trade, List<MultipartFile> files) {
+		int count = tradeRepository.updateTrade(trade);
+		
+		int userId = trade.getUserId();
+		int postId = trade.getId();
+
+		imageService.deleteImageByPostIdType(postId,"trade");
+		if(files != null) {
+			
+			for(MultipartFile file:files) {
+				String userIdStr = userService.getLoginIdById(userId);
+				imageService.saveImageFile(userIdStr, file,"trade", postId);
+			}
+			
+		}
+		return count;
+	}
 }

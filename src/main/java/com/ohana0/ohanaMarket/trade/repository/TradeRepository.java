@@ -26,6 +26,8 @@ public interface TradeRepository {
 	public List<Trade> selectTradeByUserId(@Param("userId")int userId);
 
 	public List<Trade> selectTradeByRegion(@Param("region")String region);
+
+	public int updateTrade(Trade trade);
 	
 	
 

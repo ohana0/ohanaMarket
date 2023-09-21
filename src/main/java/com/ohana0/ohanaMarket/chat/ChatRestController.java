@@ -19,10 +19,23 @@ import com.ohana0.ohanaMarket.user.service.UserService;
 public class ChatRestController {
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private UserService userService;
 
 	@PostMapping("/chat/new")
-	public Map<String,String> newChat(HttpSession session,@RequestParam("guestId")int guestId){
+	public Map<String,String> newChat(HttpSession session
+			,@RequestParam(value="guestId",required=false)Integer guestKeyId
+			,@RequestParam(value="guestLoginId",required=false)String guestLoginId){
 		int hostId = (int)session.getAttribute("id");
+		int guestId = 0;
+		if(guestKeyId !=null) {
+			guestId = guestKeyId;
+		}
+		else {
+			User guest = userService.getUserById(guestLoginId);
+			guestId = guest.getId();
+		}
+		
 		if(hostId == guestId) {
 			Map<String,String> resultMap = new HashMap<>();
 			resultMap.put("result", "false");
@@ -48,7 +61,8 @@ public class ChatRestController {
 		
 	}
 	@PostMapping("/chat/sendMessage")
-	public Map<String,String> sendMessage(@RequestParam(value="chatId",required=false)Integer chatId, @RequestParam("content")String content, HttpSession session){
+	public Map<String,String> sendMessage(@RequestParam(value="chatId",required=false)Integer chatId
+			, @RequestParam("content")String content, HttpSession session){
 		if(chatId == null) {
 			Map<String,String> resultMap = new HashMap<>();
 			resultMap.put("result", "false");

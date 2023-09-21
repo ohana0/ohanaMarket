@@ -54,5 +54,11 @@
 		WHERE `tradeLocation` LIKE '%${region}%'
 		ORDER BY `id` DESC		
 	</select>
+	<update id="updateTrade"  parameterType="com.ohana0.ohanaMarket.trade.domain.Trade">
+		UPDATE `trade`
+		SET `title`=#{title},`content`=#{content},`price`=#{price},`type`=#{type},`tradeLocation`=#{tradeLocation},`state`=#{state},`updatedAt`=now()
+		WHERE `id`=#{id}
+	
+	</update>
 
 </mapper>

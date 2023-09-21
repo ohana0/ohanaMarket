@@ -24,7 +24,7 @@ public class ChatController {
 		int userId = (int)session.getAttribute("id");
 		List<ChatDetail> chatList = chatService.getChatList(userId);
 		if(id !=null) {
-			ChatDetail chat = chatService.getChat(id);
+			ChatDetail chat = chatService.getChat(id,userId);
 			model.addAttribute("thisChat",chat);
 		}
 		model.addAttribute("chatList", chatList);

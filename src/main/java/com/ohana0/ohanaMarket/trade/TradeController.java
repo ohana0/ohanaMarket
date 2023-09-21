@@ -58,5 +58,13 @@ public class TradeController {
 		
 		return "/trade/main";
 	}
+	
+	@GetMapping("/board/trade/update")
+	public String updateTrade(@RequestParam("id")int id,Model model) {
+		TradeDetail trade = tradeService.getTradeById(id);
+		
+		model.addAttribute("trade", trade);
+		return"/trade/updatePost";
+	}
 
 }
