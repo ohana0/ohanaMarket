@@ -34,6 +34,7 @@
 </c:forEach>			
 			</div>
 			<div id="chatBox" class="col-6" style="border:solid;height:500px">
+			<c:if test="${not empty thisChat }">
 				<div class="mt-2">${thisChat.yourProfile.loginId }님과의 대화</div>
 				<div style="height:380px;overflow:auto">
 				<hr>
@@ -58,6 +59,7 @@
 					<button type="submit" class="btn btn-info" id="sendBtn">보내기</button>
 					<h3><i class="bi bi-arrow-clockwise" id="reloadBtn"></i></h3>
 				</div>
+			</c:if>
 			</div>
 		
 		
@@ -68,6 +70,11 @@
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 <script>
 	$(document).ready(function(){
+
+        setInterval(function() {
+              	
+
+        }, 3000); 
 
 		$("#sendBtn").on("click",function(){
 			let content = $("#messageInput").val();

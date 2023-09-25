@@ -30,7 +30,7 @@
 				  <div class="modal-dialog" role="document">
 				  	<div class="modal-content">
 				 		<div class="nav flex-column w-100">
-				 			<button>${loginId }</button>
+				 			<button id="myProfileLink">${loginId }</button>
 						    <a href="/user/logout" class="btn nav-link bg-secondary text-white font-weight-bold">로그아웃</a>
 						    <a href="#" class="btn nav-link bg-secondary text-white font-weight-bold">정보수정</a>
 						</div>
@@ -75,6 +75,9 @@
 			<hr>
 <script>
 $(document).ready(function(){
+		$("#myProfileLink").on("click",function(){
+			location.href="/user/profile?userId="+"${loginId}";
+		})
         $("input[name=searchType]").on('change', function() {
             if($(this).val() == 'keyWord') {
                 $("#searchByKeyWord").removeClass("d-none");

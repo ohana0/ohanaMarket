@@ -44,7 +44,7 @@
 				<div class="ml-5" style="width:500px">
 					<div class="content-area" style="height:400px">
 						<h1>${trade.title }</h1>
-						<div>${trade.userId }</div>
+						<a class="text-dark" href="/user/profile?userId=${trade.userId }">${trade.userId }</a>
 						<div style="height:240px">
 							<div>${trade.content }</div>
 <c:if test="${trade.userId eq loginId }">	

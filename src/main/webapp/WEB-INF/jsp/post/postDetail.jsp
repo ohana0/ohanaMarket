@@ -31,7 +31,7 @@
 
 
 						</div>
-						<div>${post.userId }</div>
+						<a class="text-dark" href="/user/profile?userId=${post.userId }">${post.userId }</a>
 					</div>
 	
 
@@ -45,7 +45,7 @@
 					<div>댓글${post.commentCount }개</div>
 <c:forEach var="comment" items="${post.commentList }">
 					<div class="d-flex m-2">
-						<div class="col-2">${comment.userId }</div>
+						<a href="/user/profile?userId=${comment.userId }" class="text-dark col-2">${comment.userId }</a>
 						<div class="col-10">${comment.content}</div>
 					</div>
 

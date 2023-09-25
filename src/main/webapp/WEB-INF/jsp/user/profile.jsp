@@ -36,7 +36,7 @@
 				</div>
 <c:if test="${id ne user.id }">
 				<div>
-					<button class="btn btn-info" type="button" id="hostChat">채팅걸기</button>
+					<button class="btn btn-info" type="button" id="hostChat">채팅시작하기</button>
 				</div>
 </c:if>
 			</div>
