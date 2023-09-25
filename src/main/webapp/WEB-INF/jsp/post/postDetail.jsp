@@ -36,7 +36,7 @@
 	
 
 					
-				</div>
+				</div> 
 				<hr>
 				<div class="content-box m-2" style="width:800px">
 					<div>${post.content }</div>
