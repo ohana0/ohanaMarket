@@ -19,41 +19,57 @@
 		<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 		<%@ include file="/WEB-INF/jsp/include/nav.jsp" %>
 		<section class="d-flex">
-			<div id="chatListBox" class="col-6" style="border:solid;height:500px;overflow:auto">
+			<div id="chatListBox" class="col-6 p-0">
+<div>
+			
 <c:forEach var="chat" items="${chatList }">
-	<a class="card d-flex text-dark chat-card" href="/chat/main/?id=${chat.id }" style="height:90px;overflow:hidden">
-		<div>
+	<div class="d-flex text-dark chat-card justify-content-between" data-url="/chat/main/?id=${chat.id }">
+		<div class="pl-2">
+		
 			<div>${chat.yourProfile.loginId}</div>
 			<img src="${chat.yourProfile.profileImagePath }" width="60px" height="60px">
 		</div>
-		<div>
-			<div>${chat.lastMessage }</div>
-			<div>${chat.updatedAt }</div>	
+		
+		<div class="pr-3 text-right">
+<c:if test="${chat.dateAgo eq 0 }">
+			<div>오늘</div>
+</c:if>
+<c:if test="${chat.dateAgo ne 0 }">
+			<div>${chat.dateAgo } 일전</div>	
+</c:if>
+<br>
+			<div>${chat.lastMessage }</div>			
+			
+
 		</div>
-	</a>
-</c:forEach>			
-			</div>
-			<div id="chatBox" class="col-6" style="border:solid;height:500px">
-			<c:if test="${not empty thisChat }">
-				<div class="mt-2">${thisChat.yourProfile.loginId }님과의 대화</div>
-				<div style="height:380px;overflow:auto">
-				<hr>
-<c:forEach var="message" items="${thisChat.messageList }">
-	<c:if test="${message.userId ne id }">
-		<div class="d-flex">	
-					<img alt="yourProfile" src="${thisChat.yourProfile.profileImagePath }" style="width:80px;height:80px;border-radius:70%">
-					<div class="word-break-break-all" style="width:450px">${message.content }</div>
-		</div>
-	</c:if>
-	<c:if test="${message.userId eq id }">
-		<div class="d-flex justify-content-end">	
-					<div style="word-break:break-all">${message.content }</div>
-					<img alt="myProfile" src="${thisChat.myProfile.profileImagePath }" style="width:80px;height:80px;border-radius:70%">
-		</div>
-	</c:if>
+	</div>
 </c:forEach>
-				</div>
+			
+</div>
+			</div>
+			<div id="chatBox" class="col-6" style="border:solid;height:500px;border-right:none;">
+			<c:if test="${not empty thisChat }">
+				<div id="chattingArea">
+				<div class="mt-2">${thisChat.yourProfile.loginId }님과의 대화</div>
+				<div id="messageArea" style="height:380px;overflow:auto">
 				<hr>
+					<c:forEach var="message" items="${thisChat.messageList }">
+						<c:if test="${message.userId ne id }">
+							<div class="d-flex">	
+										<img alt="yourProfile" src="${thisChat.yourProfile.profileImagePath }" style="width:80px;height:80px;border-radius:70%">
+										<div class="word-break-break-all" style="width:450px">${message.content }</div>
+							</div>
+						</c:if>
+						<c:if test="${message.userId eq id }">
+							<div class="d-flex justify-content-end">	
+										<div style="word-break:break-all">${message.content }</div>
+										<img alt="myProfile" src="${thisChat.myProfile.profileImagePath }" style="width:80px;height:80px;border-radius:70%">
+							</div>
+						</c:if>
+					</c:forEach>
+						</div>
+				<hr>
+				</div>
 				<div class="d-flex">
 					<input type="text" class="form-control" id="messageInput">
 					<button type="submit" class="btn btn-info" id="sendBtn">보내기</button>
@@ -63,55 +79,134 @@
 			</div>
 		
 		
-		
 		</section>
+<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#newChat">
+	대화시작
+</button>			
 
 
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+		<!-- Modal -->
+				<div class="modal fade" id="newChat" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				  	<div class="modal-content">
+				 		<div class="nav flex-column w-100">
+					 		<form action="#">
+					 			<input class="form-control" name="guestLoginId" id="newChatGuestId">
+				 				<button type="submit" id="newChatSubmitBtn" class="btn btn-block">대화시작</button>
+				 			</form>
+				 		</div>
+					</div>
+				  </div>
+				</div>
 <script>
 	$(document).ready(function(){
-
-        setInterval(function() {
-              	
-
-        }, 3000); 
-
-		$("#sendBtn").on("click",function(){
-			let content = $("#messageInput").val();
-			let chatId=${thisChat.id};
+		$("#newChatSubmitBtn").on("click",function(){
+			let guestId=$("#newChatGuestId").val();
+			
+			let hostId = ${id};
 			$.ajax({
 				type:"post"
-				,url:"/chat/sendMessage"
-				,data:{"chatId":chatId,"content":content}
+				,url:"/chat/new"
+				,data:{"guestLoginId":guestId}
 				,success:function(data){
-					if(data.result =="success"){
-						location.reload();
+					if(data.result=="success"){
+						location.href="/chat/main?id="+data.chatId;
 					}
 					else{
-						alert("메세지 전송에 실패하였습니다");
-						return;
+						alert("채팅생성에 실패하였습니다");
 					}
+					
 				}
-				,error:function(){
+				,error:function(data){
 					alert("오류발생");
-					return;
 				}
-				
-				
-				
 			})
 			
-		});
+			
+			
+		})
+		
+		
+				
+
+
+		$(".chat-card").on("click",function(){
+			let url = $(this).attr("data-url");
+			location.href=url;
+		})
+		function reloadChat(){
+			$("#messageArea").load(location.href+' #messageArea');
+
+			
+		}
+		setInterval(function() {
+			$("#messageArea").load(location.href + ' #messageArea');
+//			scrollToBottom();
+		}, 5000);
+
 		$("#reloadBtn").on("click",function(){
-			location.reload();
+			scrollToBottom();
+
 			
 		});
+		function scrollToBottom(){
+			var scrollHeight = $("#messageArea")[0].scrollHeight;
+			
+			$("#messageArea").scrollTop(scrollHeight);
+			
+		};
 
 		
 		
 		
 	})
 </script>
+<c:if test="${not empty thisChat}">
+<script>
+$(document).ready(function(){
+	
+$("#messageInput").on("keypress", function (e) {
+	  if (e.key === "Enter") { // "Enter" 문자열로 엔터 키를 감지합니다.
+	    e.preventDefault(); // 엔터 키의 기본 동작(폼 제출)을 막습니다.
+	    $("#sendBtn").click(); // 보내기 버튼을 클릭합니다.
+	  }
+});
+
+$("#sendBtn").on("click",function(){
+	let content = $("#messageInput").val();
+	if (content == ""){
+		return;
+	}
+	let chatId=${thisChat.id};
+	$.ajax({
+		type:"post"
+		,url:"/chat/sendMessage"
+		,data:{"chatId":chatId,"content":content}
+		,success:function(data){
+			if(data.result =="success"){
+				location.reload();
+			}
+
+			else{
+				alert("메세지 전송에 실패하였습니다");
+				return;
+			}
+		}
+		,error:function(){
+			alert("오류발생");
+			return;
+		}
+		
+		
+		
+	})
+	
+});
+
+})
+</script>
+</c:if>
 	</div>
 
 

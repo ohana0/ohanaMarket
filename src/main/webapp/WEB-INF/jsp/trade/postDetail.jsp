@@ -57,7 +57,7 @@
 </c:if>
 
 						</div>
-						<h5>희망가격: ${trade.price }원</h5>
+						<h5>판매가격: <fmt:formatNumber value="${trade.price}" pattern="#,###" />원</h5>
 <c:if test="${not empty trade.tradeLocation }">
 						<div>거래희망장소: ${trade.tradeLocation }</div>
 </c:if>
@@ -91,7 +91,7 @@
 
 	$(document).ready(function(){
 		$("#newChatBtn").on("click",function(){
-			alert();
+
 			let hostId = ${id};
 			let guestId = "${trade.userId}";
 			$.ajax({

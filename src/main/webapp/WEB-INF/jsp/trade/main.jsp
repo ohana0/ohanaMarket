@@ -36,7 +36,8 @@
 										</div>
 										<div class="d-flex align-items-center">
 										<div>
-											<h3>${trade.price }원</h3>
+										
+											<h3><fmt:formatNumber value="${trade.price}" pattern="#,###" />원</h3>
 											<div>${trade.tradeLocation }</div>
 										</div>
 <c:if test="${trade.thumbnailImagePath ne null }">										

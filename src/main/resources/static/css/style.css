@@ -26,6 +26,21 @@ header{
 	border-color:red;
 }
 
+.chat-card{
+	width:100%;
+	margin:none;
+	padding:none;
+	height:90px;
+	border-bottom:solid 1px;
+}
+#chatListBox{
+	border:solid;
+	height:500px;
+	overflow:auto;
+	border-right:none;
+	border-left:none;
+}
+
 footer{
 	height:80px;
 }
