@@ -5,7 +5,7 @@
 		<header>
 			<div class="d-flex align-items-center justify-content-between">
 				<a class="d-flex" href="/board/post/main">
-					<img src="/static/image/logoImage.png" height="75px" class="pl-2">
+					<img src="/static/image/logoImage.png" height="75px" class="pl-2 d-none">
 					<div id="logoStyle" class="pl-1 text-dark">OhanaMarket</div>
 				</a>
 <c:if test="${not empty loginId }">
