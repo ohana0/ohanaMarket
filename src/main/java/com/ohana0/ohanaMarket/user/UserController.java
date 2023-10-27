@@ -59,4 +59,16 @@ public class UserController {
 		model.addAttribute("tradeList", tradeList);
 		return "/user/profile";
 	}
+	@GetMapping("/user/profile/update")
+	public String updateProfile(@RequestParam("id")int id,HttpSession session,Model model) {
+		
+		User user = userService.getUserById((int)session.getAttribute("id"));
+		if(user == null) {
+			return "/user/userProfileError";
+		}
+		else {
+			model.addAttribute("user", user);
+			return"/user/updateProfile";
+		}
+	}
 }

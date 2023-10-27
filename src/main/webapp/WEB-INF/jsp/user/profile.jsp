@@ -23,17 +23,22 @@
 	<div>검색된 유저가 존재하지 않습니다.</div>
 	<a href="/board/post/main">돌아가기</a>
 </c:if>
-		<section >
-			<div class="d-flex ml-4">
-				<img src="${user.profileImagePath }" height="100px">
-				<div class="profile-info ml-4">
-					<h1>${user.loginId }</h1>
-					<div>닉네임: ${user.nickname }</div>
-					<div>지역: ${user.region }</div>
-					<div>소개: ${user.introduce }</div>
+		<section class="d-flex justify-content-center">
+		<div class="col-10 card">
+			<div class="d-flex">
+
+				<c:if test="${not empty user.profileImagePath}">
+					<img src="${user.profileImagePath }" height="100px">
+				</c:if>
+					<div class="profile-info ml-4">
+						<h1>${user.loginId }</h1>
+						<div>닉네임: ${user.nickname }</div>
+						<div>지역: ${user.region }</div>
+						<div>소개: ${user.introduce }</div>
+						
 					
-				
-				</div>
+					</div>
+
 <c:if test="${id ne user.id }">
 				<div>
 					<button class="btn btn-info" type="button" id="hostChat">채팅시작하기</button>
@@ -43,7 +48,7 @@
 			
 		<hr>
 		<div class="d-flex">
-			<div class="col-5">
+			<div class="col-6 p-0">
 				<h5>자유게시판</h5>
 <c:forEach var="post" items="${postList }" >
 
@@ -63,7 +68,7 @@
 			
 			</div>
 			
-			<div class="col-5">
+			<div class="col-6 p-0">
 				<h5>거래게시판</h5>
 			
 <c:forEach var="trade" items="${tradeList }" >
@@ -92,6 +97,7 @@
 		
 		
 		
+		</div>
 		</section>
 		<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 <script>
