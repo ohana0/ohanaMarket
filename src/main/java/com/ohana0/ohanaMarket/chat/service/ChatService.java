@@ -107,4 +107,11 @@ public class ChatService {
 	}
 
 
+	public int deleteChat(int chatId) {
+		int count = chatRepository.deleteChat(chatId);
+		messageRepository.deleteMessageByChatId(chatId);
+		return count;
+	}
+
+
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +80,19 @@ public class ChatRestController {
 			resultMap.put("result", "false");
 		}
 		
+		return resultMap;
+	}
+	
+	@DeleteMapping("/chat/closeChat")
+	public Map<String,String> closeChat(@RequestParam("id")int chatId){
+		int count = chatService.deleteChat(chatId);
+		Map<String,String> resultMap = new HashMap<>();
+		if(count > 0) {
+			resultMap.put("result", "success");
+		}
+		else {
+			resultMap.put("result", "false");
+		}
 		return resultMap;
 	}
 

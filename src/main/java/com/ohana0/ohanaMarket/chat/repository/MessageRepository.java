@@ -18,4 +18,6 @@ public interface MessageRepository {
 
 	public String getLastMessage(@Param("chatId")int chatId);
 
+	public int deleteMessageByChatId(@Param("chatId")int chatId);
+
 }

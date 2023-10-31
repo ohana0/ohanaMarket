@@ -23,6 +23,9 @@
 <div>
 			
 <c:forEach var="chat" items="${chatList }">
+<c:if test="${empty chatList }">
+	<h1>연결된채팅이없습니다.</h1>
+</c:if>
 	<div class="d-flex text-dark chat-card justify-content-between" data-url="/chat/main/?id=${chat.id }">
 		<div class="pl-2">
 		

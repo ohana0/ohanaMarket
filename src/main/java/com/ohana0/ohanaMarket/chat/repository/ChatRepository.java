@@ -17,6 +17,8 @@ public interface ChatRepository {
 	public List<Chat> selectChatByUserId(@Param("userId")int userId);
 
 	public Chat selectChatById(@Param("id")int id);
+
+	public int deleteChat(@Param("id")int chatId);
 	
 
 

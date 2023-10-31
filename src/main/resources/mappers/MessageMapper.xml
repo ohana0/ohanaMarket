@@ -23,4 +23,8 @@
 		ORDER BY `id` DESC
 		LIMIT 1
 	</select>
+	<delete id="deleteMessageByChatId" parameterType="int">
+		DELETE FROM `message`
+		WHERE `chatId` = #{chatId}
+	</delete>
 </mapper>

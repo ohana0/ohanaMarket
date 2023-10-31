@@ -48,7 +48,7 @@
 <!-- joinbox2 -->
 				<div id="joinBox2" class="d-none">
 					<div class="image-input-div input-div card d-flex">
-						<i class="bi bi-file-image p-2"><input type="file" class="input-box" id="imageInput"></i>
+						<i class="bi bi-file-image p-2"><input type="file" class="input-box" id="imageInput" accept="image/*"></i>
 					</div>
 					<div class="region-input-div input-div card d-flex justify-content-flex-start">
 						<i class="bi bi-map p-2">
