@@ -113,12 +113,32 @@ public class PostService {
 			Date date = new Date();
 			long millisecond = date.getTime()- post.getCreatedAt().getTime();
 			int day =  (int) Math.floor(millisecond/(1000*60*60*24));
+			String thumbnail;
+			String content = post.getContent();
+			if(content.contains("<img")) {
+				String thumbnailTag = "";
+				int startIndex = content.indexOf("<img");
+				int endIndex = startIndex;
+
+				for(int i = startIndex; i< content.length(); i++) {
+					if(content.charAt(i) == 076) {
+						endIndex = i + 1;
+						break;
+					}
+				}
+				thumbnailTag = content.substring(startIndex,endIndex);
+				thumbnail = thumbnailTag.substring(0, 4)+" class=\"summernote-image\" style=\"width:80px;height:60px\"" + thumbnailTag.substring(5);
+			}
+			else{
+				thumbnail = "";
+			}
 			PostDetail postDetail =PostDetail.builder()
 					.id(post.getId())
 					.title(post.getTitle())
 					.content(post.getContent())
 					.userId(userService.getLoginIdById(post.getUserId()))
 					.createdAt(post.getCreatedAt())
+					.thumbnail(thumbnail)
 					.dateAgo(day)
 					.commentList(commentService.getCommentByPostId(post.getId()))
 					.commentCount(commentService.countCommentByPostId(post.getId()))
